@@ -15,7 +15,7 @@ const sentence = {
     transition: {
       staggerChildren: 0.08,
       repeat: Infinity,
-      repeatDelay: 1, // Shortened the delay
+      repeatDelay: 1, 
     },
   },
 };
@@ -39,7 +39,6 @@ export function AnimatedHeading({ text, className }: AnimatedHeadingProps) {
       animate="visible"
     >
       {letters.map((char, index) => {
-        // Use a space with a specific width for whitespace characters
         if (char === ' ') {
           return <span key={index} style={{ display: 'inline-block', width: '0.5em' }} />;
         }
