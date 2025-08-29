@@ -10,7 +10,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
-import { PlusCircle, Settings, Wallet } from 'lucide-react';
+import { PlusCircle, Settings } from 'lucide-react';
 import { StatCard } from './stat-card';
 import { SpendingPieChart } from './spending-pie-chart';
 import { BudgetBarChart } from './budget-bar-chart';
@@ -19,6 +19,7 @@ import { SpendingInsights } from './spending-insights';
 import { AddExpenseForm } from '../expenses/add-expense-form';
 import { BudgetEditor } from '../budget/budget-editor';
 import { useToast } from '@/hooks/use-toast';
+import { Logo } from '@/components/ui/logo';
 
 interface DashboardPageProps {
   initialExpenses: Expense[];
@@ -65,10 +66,10 @@ export function DashboardPage({
   };
 
   return (
-    <div className="flex min-h-screen w-full flex-col bg-muted/40">
-      <header className="sticky top-0 z-30 flex h-16 items-center gap-4 border-b bg-background px-4 sm:px-6">
-        <div className="flex items-center gap-2">
-          <Wallet className="h-6 w-6 text-primary" />
+    <div className="flex min-h-screen w-full flex-col bg-transparent">
+      <header className="sticky top-0 z-30 flex h-16 items-center gap-4 border-b border-white/10 bg-background/80 px-4 backdrop-blur-sm sm:px-6">
+        <div className="flex items-center gap-3">
+          <Logo />
           <h1 className="text-xl font-bold text-foreground">FinTrack</h1>
         </div>
         <div className="ml-auto flex items-center gap-2">
