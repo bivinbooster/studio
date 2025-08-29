@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Logo } from '@/components/ui/logo';
 import { ArrowRight } from 'lucide-react';
+import { AnimatedHeading } from '@/components/ui/animated-heading';
 
 export default function Home() {
   return (
@@ -23,9 +24,10 @@ export default function Home() {
       <main className="flex-1">
         <section className="relative w-full h-[80vh] flex items-center justify-center text-center">
           <div className="relative z-10 max-w-4xl px-4">
-            <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl text-transparent bg-clip-text bg-gradient-to-r from-primary via-purple-400 to-accent">
-              Take Control of Your Finances
-            </h1>
+            <AnimatedHeading
+              className="text-4xl font-extrabold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl text-transparent bg-clip-text bg-gradient-to-r from-primary via-purple-400 to-accent"
+              text="Take Control of Your Finances"
+            />
             <p className="mt-6 max-w-2xl mx-auto text-lg text-muted-foreground md:text-xl">
               FinTrack is a powerful and intuitive app that helps you track
               expenses, manage budgets, and achieve your financial goals with
