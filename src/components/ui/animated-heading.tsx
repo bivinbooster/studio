@@ -1,6 +1,6 @@
 'use client';
 
-import { motion, Variants } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 
 interface AnimatedHeadingProps {
@@ -11,52 +11,25 @@ interface AnimatedHeadingProps {
 export function AnimatedHeading({ text, className }: AnimatedHeadingProps) {
   const letters = text.split('');
 
-  const container: Variants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.05,
-        repeat: Infinity,
-        repeatType: 'loop',
-        repeatDelay: 1,
-      },
-    },
-  };
-
-  const child: Variants = {
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        type: 'spring',
-        damping: 12,
-        stiffness: 100,
-      },
-    },
-    hidden: {
-      opacity: 0,
-      y: 20,
-      transition: {
-        type: 'spring',
-        damping: 12,
-        stiffness: 100,
-      },
-    },
-  };
-
   return (
-    <motion.h1
-      className={cn('font-bold inline-flex overflow-hidden', className)}
-      variants={container}
-      initial="hidden"
-      animate="visible"
-    >
+    <h1 className={cn('font-bold inline-flex overflow-hidden', className)}>
       {letters.map((letter, index) => (
-        <motion.span variants={child} key={index}>
+        <motion.span
+          key={index}
+          initial={{ y: 0 }}
+          animate={{
+            y: [0, -10, 0],
+          }}
+          transition={{
+            duration: 1.5,
+            repeat: Infinity,
+            delay: index * 0.05,
+            ease: 'easeInOut',
+          }}
+        >
           {letter === ' ' ? '\u00A0' : letter}
         </motion.span>
       ))}
-    </motion.h1>
+    </h1>
   );
 }
