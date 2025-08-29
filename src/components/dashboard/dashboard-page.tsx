@@ -22,6 +22,7 @@ import { AddGoalForm } from '../goals/add-goal-form';
 import { BudgetEditor } from '../budget/budget-editor';
 import { useToast } from '@/hooks/use-toast';
 import { Logo } from '@/components/ui/logo';
+import { ContributeToGoalForm } from '../goals/contribute-to-goal-form';
 
 interface DashboardPageProps {
   initialExpenses: Expense[];
@@ -69,6 +70,26 @@ export function DashboardPage({
     toast({
       title: 'Goal Added',
       description: `Your new goal "${newGoal.name}" has been set.`,
+    });
+  };
+
+  const contributeToGoal = (goalId: string, amount: number) => {
+    setGoals((prevGoals) =>
+      prevGoals.map((goal) => {
+        if (goal.id === goalId) {
+          const newCurrentAmount = goal.currentAmount + amount;
+          return {
+            ...goal,
+            currentAmount: Math.min(newCurrentAmount, goal.targetAmount), // Cap at target amount
+          };
+        }
+        return goal;
+      })
+    );
+    const goal = goals.find((g) => g.id === goalId);
+    toast({
+      title: 'Contribution Added',
+      description: `You added ${amount.toFixed(2)} to your "${goal?.name}" goal.`,
     });
   };
 
@@ -167,7 +188,7 @@ export function DashboardPage({
           </div>
         </div>
         <div className="grid gap-4">
-           <FinancialGoals goals={goals} />
+           <FinancialGoals goals={goals} onContribute={contributeToGoal} />
         </div>
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
           <div className="lg:col-span-4">
