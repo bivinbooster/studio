@@ -89,7 +89,12 @@ export function AddExpenseForm({ onSuccess }: AddExpenseFormProps) {
               <FormItem>
                 <FormLabel>Amount</FormLabel>
                 <FormControl>
-                  <Input type="number" step="0.01" {...field} />
+                  <Input
+                    type="text"
+                    inputMode="decimal"
+                    placeholder="0.00"
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>

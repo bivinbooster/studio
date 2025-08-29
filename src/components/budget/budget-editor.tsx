@@ -82,8 +82,9 @@ export function BudgetEditor({ currentBudgets, onSave }: BudgetEditorProps) {
                         </FormLabel>
                         <FormControl>
                           <Input
-                            type="number"
-                            step="10"
+                            type="text"
+                            inputMode="decimal"
+                            placeholder="0"
                             className="w-32"
                             {...field}
                           />
