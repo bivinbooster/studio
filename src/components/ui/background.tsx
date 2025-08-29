@@ -24,7 +24,7 @@ export function Background() {
       <div className="pointer-events-none absolute inset-0 z-10 h-full w-full [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]"></div>
       <div className="absolute inset-0 z-20 overflow-hidden">
         <div className="absolute bottom-0 left-1/2 h-4/5 w-1/2 -translate-x-1/2 rounded-t-full bg-gradient-to-t from-background via-transparent to-transparent"></div>
-        {[...Array(2)].map((_, i) => (
+        {[...Array(20)].map((_, i) => (
           <div
             key={`shooting-star-${i}`}
             className="absolute h-0.5 w-0.5 rounded-full bg-primary shadow-[0_0_0_1px_#ffffff10]"
