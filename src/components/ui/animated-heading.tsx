@@ -13,10 +13,14 @@ export function AnimatedHeading({ text, className }: AnimatedHeadingProps) {
 
   const container: Variants = {
     hidden: { opacity: 0 },
-    visible: (i: number = 1) => ({
+    visible: {
       opacity: 1,
-      transition: { staggerChildren: 0.03, delayChildren: 0.04 * i },
-    }),
+      transition: {
+        staggerChildren: 0.03,
+        repeat: Infinity,
+        repeatType: 'reverse',
+      },
+    },
   };
 
   const child: Variants = {
