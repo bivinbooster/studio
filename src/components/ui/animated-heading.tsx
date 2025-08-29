@@ -9,7 +9,7 @@ interface AnimatedHeadingProps {
 }
 
 const sentence = {
-  hidden: { opacity: 1 },
+  hidden: { opacity: 1 }, // Start with opacity 1 to avoid initial flash
   visible: {
     opacity: 1,
     transition: {
@@ -26,56 +26,45 @@ const letter = {
   visible: {
     opacity: 1,
     y: 0,
-    transition: {
-      // This creates the reveal
-      type: "spring",
-      damping: 12,
-      stiffness: 100,
-    },
   },
 };
 
 export function AnimatedHeading({ text, className }: AnimatedHeadingProps) {
   const letters = text.split('');
+  const totalDuration = letters.length * 0.08 + 1.5; // Stagger duration + 1.5s pause
 
   return (
     <motion.h1
       className={cn('font-bold', className)}
-      variants={sentence}
-      initial="hidden"
-      animate="visible"
-      // Add a key to force re-render and re-animate
-      // But a better approach is needed for looping reveal and disappear.
-      // Let's rewrite the logic to be more robust.
-    >
-      {letters.map((char, index) => {
-        // Create a new component for the span to handle its own animation loop
-        return (
-          <AnimatedLetter key={`${char}-${index}`} delay={index * 0.08}>
-            {char === ' ' ? '\u00A0' : char}
-          </AnimatedLetter>
-        );
-      })}
-    </motion.h1>
-  );
-}
-
-
-function AnimatedLetter({ children, delay }: { children: React.ReactNode, delay: number }) {
-  return (
-    <motion.span
-      initial={{ opacity: 0 }}
-      animate={{ opacity: [0, 1, 1, 0] }}
-      transition={{
-        times: [0, 0.1, 0.9, 1], // Appear quickly, stay, disappear quickly
-        duration: 3, // Total duration of one loop
-        repeat: Infinity,
-        repeatDelay: 2, // Wait 2 seconds before repeating the entire heading animation
-        delay: delay,
+      // Animate opacity to make the whole heading disappear at once
+      animate={{
+        opacity: [0, 1, 1, 0]
       }}
-      style={{display: 'inline-block'}}
+      transition={{
+        duration: totalDuration,
+        times: [0, 0.01, 0.99, 1], // Disappear quickly at the end
+        repeat: Infinity,
+        ease: "linear",
+      }}
     >
-      {children}
-    </motion.span>
+      <motion.span
+         // Use a separate motion component for the children staggering
+        variants={sentence}
+        initial="hidden"
+        animate="visible"
+      >
+        {letters.map((char, index) => {
+          return (
+            <motion.span
+              key={`${char}-${index}`}
+              variants={letter}
+              style={{ display: 'inline-block' }}
+            >
+              {char === ' ' ? '\u00A0' : char}
+            </motion.span>
+          );
+        })}
+      </motion.span>
+    </motion.h1>
   );
 }
