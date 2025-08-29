@@ -14,6 +14,8 @@ const sentence = {
     opacity: 1,
     transition: {
       staggerChildren: 0.08,
+      repeat: Infinity,
+      repeatDelay: 1, // Shortened the delay
     },
   },
 };
@@ -23,12 +25,6 @@ const letter = {
   visible: {
     opacity: 1,
     y: 0,
-    transition: {
-      repeat: Infinity,
-      repeatType: 'reverse' as const,
-      duration: 2,
-      repeatDelay: 5,
-    },
   },
 };
 
