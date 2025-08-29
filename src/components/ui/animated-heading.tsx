@@ -46,7 +46,7 @@ export function AnimatedHeading({ text, className }: AnimatedHeadingProps) {
       variants={container}
       initial="hidden"
       animate="visible"
-      style={{ display: 'flex', overflow: 'hidden' }}
+      style={{ display: 'inline-flex', overflow: 'hidden' }}
     >
       {letters.map((letter, index) => (
         <motion.span key={index} variants={child}>
