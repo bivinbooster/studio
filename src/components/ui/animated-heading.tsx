@@ -21,7 +21,7 @@ export function AnimatedHeading({ text, className }: AnimatedHeadingProps) {
       ease: 'easeInOut',
       repeat: Infinity,
       repeatType: 'loop',
-      repeatDelay: 0.2,
+      repeatDelay: 1,
     });
 
     return controls.stop;
