@@ -51,7 +51,11 @@ export function SpendingPieChart({ expenses }: SpendingPieChartProps) {
       <CardContent className="flex justify-center">
         {chartData.length > 0 ? (
           <ChartContainer config={chartConfig} className="min-h-[250px] w-full max-w-[300px]">
-            <PieChart>
+            <PieChart
+              style={{
+                filter: 'drop-shadow(0px 10px 8px rgba(0, 0, 0, 0.4))',
+              }}
+            >
               <ChartTooltip
                 cursor={false}
                 content={<ChartTooltipContent hideLabel />}
@@ -62,6 +66,7 @@ export function SpendingPieChart({ expenses }: SpendingPieChartProps) {
                 nameKey="name"
                 innerRadius={60}
                 strokeWidth={5}
+                stroke="hsl(var(--card))"
               >
                 {chartData.map((entry, index) => (
                   <Cell key={`cell-${index}`} fill={entry.fill} />
