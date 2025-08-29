@@ -16,9 +16,9 @@ export function AnimatedHeading({ text, className }: AnimatedHeadingProps) {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.03,
+        staggerChildren: 0.05,
         repeat: Infinity,
-        repeatType: 'reverse',
+        repeatDelay: 1,
       },
     },
   };
@@ -46,8 +46,7 @@ export function AnimatedHeading({ text, className }: AnimatedHeadingProps) {
 
   return (
     <motion.h1
-      className={cn('font-bold', className)}
-      style={{ overflow: 'hidden', display: 'flex' }}
+      className={cn('font-bold inline-flex overflow-hidden', className)}
       variants={container}
       initial="hidden"
       animate="visible"
