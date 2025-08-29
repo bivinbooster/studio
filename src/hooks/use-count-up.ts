@@ -18,7 +18,7 @@ export function useCountUp(endValue: number, duration: number = 1500) {
       
       // Ease-out cubic function
       const easeOutPercentage = 1 - Math.pow(1 - percentage, 3);
-      const currentCount = Math.floor(endValue * easeOutPercentage);
+      const currentCount = endValue * easeOutPercentage;
 
       setCount(currentCount);
 
@@ -30,6 +30,8 @@ export function useCountUp(endValue: number, duration: number = 1500) {
       }
     };
 
+    // Reset and start animation
+    setCount(0);
     animationFrameId = requestAnimationFrame(animateCount);
 
     return () => {
@@ -37,5 +39,6 @@ export function useCountUp(endValue: number, duration: number = 1500) {
     };
   }, [endValue, duration]);
 
-  return count;
+  // If the value is negative, we animate the absolute value and format later
+  return Math.abs(count) * Math.sign(endValue);
 }

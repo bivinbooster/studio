@@ -13,12 +13,18 @@ export function StatCard({ title, value, type = 'number' }: StatCardProps) {
 
   const formatValue = (val: number) => {
     if (type === 'currency') {
-      return new Intl.NumberFormat('en-US', {
+      const formatted = new Intl.NumberFormat('en-US', {
         style: 'currency',
         currency: 'USD',
       }).format(val);
+      // For negative values, formatCurrency puts the '-' sign before the '$'. 
+      // e.g., -$100. We want it to be $-100.
+      if (val < 0) {
+        return `-$${formatted.replace('-$','').replace('-','')}`;
+      }
+      return formatted;
     }
-    return val.toLocaleString();
+    return val.toLocaleString(undefined, { maximumFractionDigits: 0 });
   };
 
   const isNegative = value < 0;
