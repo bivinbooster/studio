@@ -1,5 +1,6 @@
 'use client';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
+import { useCountUp } from '@/hooks/use-count-up';
 
 interface StatCardProps {
   title: string;
@@ -8,6 +9,8 @@ interface StatCardProps {
 }
 
 export function StatCard({ title, value, type = 'number' }: StatCardProps) {
+  const animatedValue = useCountUp(value);
+
   const formatValue = (val: number) => {
     if (type === 'currency') {
       return new Intl.NumberFormat('en-US', {
@@ -15,7 +18,7 @@ export function StatCard({ title, value, type = 'number' }: StatCardProps) {
         currency: 'USD',
       }).format(val);
     }
-    return val.toString();
+    return val.toLocaleString();
   };
 
   const isNegative = value < 0;
@@ -29,7 +32,7 @@ export function StatCard({ title, value, type = 'number' }: StatCardProps) {
         <div
           className={`text-2xl font-bold ${isNegative ? 'text-destructive' : 'text-foreground'}`}
         >
-          {formatValue(value)}
+          {formatValue(animatedValue)}
         </div>
       </CardContent>
     </Card>
