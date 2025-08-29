@@ -8,28 +8,44 @@ interface AnimatedHeadingProps {
   className?: string;
 }
 
+const sentence = {
+  hidden: { opacity: 1 },
+  visible: {
+    opacity: 1,
+    transition: {
+      delay: 0.5,
+      staggerChildren: 0.08,
+      repeat: Infinity,
+      repeatDelay: 1,
+    },
+  },
+};
+
+const letter = {
+  hidden: { opacity: 0, y: 50 },
+  visible: {
+    opacity: 1,
+    y: 0,
+  },
+};
+
 export function AnimatedHeading({ text, className }: AnimatedHeadingProps) {
   const letters = text.split('');
 
   return (
-    <h1 className={cn('font-bold inline-flex overflow-hidden', className)}>
-      {letters.map((letter, index) => (
-        <motion.span
-          key={index}
-          initial={{ y: 0 }}
-          animate={{
-            y: [0, -10, 0],
-          }}
-          transition={{
-            duration: 1.5,
-            repeat: Infinity,
-            delay: index * 0.05,
-            ease: 'easeInOut',
-          }}
-        >
-          {letter === ' ' ? '\u00A0' : letter}
-        </motion.span>
-      ))}
-    </h1>
+    <motion.h1
+      className={cn('font-bold', className)}
+      variants={sentence}
+      initial="hidden"
+      animate="visible"
+    >
+      {letters.map((char, index) => {
+        return (
+          <motion.span key={char + '-' + index} variants={letter}>
+            {char}
+          </motion.span>
+        );
+      })}
+    </motion.h1>
   );
 }
