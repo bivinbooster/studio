@@ -9,7 +9,7 @@ import {
   ShoppingCart,
   MoreHorizontal,
 } from 'lucide-react';
-import type { Category, Expense, Budget, CategoryID } from './types';
+import type { Category, Expense, Budget, CategoryID, FinancialGoal } from './types';
 
 export const CATEGORIES: Category[] = [
   {
@@ -146,4 +146,10 @@ export const SAMPLE_BUDGETS: Budget[] = [
   { category: 'personal', amount: 80 },
   { category: 'shopping', amount: 250 },
   { category: 'other', amount: 50 },
+];
+
+export const SAMPLE_GOALS: FinancialGoal[] = [
+    { id: '1', name: 'Dream Vacation', targetAmount: 5000, currentAmount: 1250 },
+    { id: '2', name: 'New Laptop', targetAmount: 2000, currentAmount: 1800 },
+    { id: '3', name: 'Emergency Fund', targetAmount: 10000, currentAmount: 4000 },
 ];

@@ -1,6 +1,6 @@
 'use client';
 
-import type { Expense, Budget } from '@/lib/types';
+import type { Expense, Budget, FinancialGoal } from '@/lib/types';
 import { useState, useMemo } from 'react';
 import { Button } from '@/components/ui/button';
 import {
@@ -10,13 +10,15 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
-import { PlusCircle, Settings } from 'lucide-react';
+import { PlusCircle, Settings, Target } from 'lucide-react';
 import { StatCard } from './stat-card';
 import { SpendingPieChart } from './spending-pie-chart';
 import { BudgetBarChart } from './budget-bar-chart';
 import { RecentExpenses } from './recent-expenses';
 import { SpendingInsights } from './spending-insights';
+import { FinancialGoals } from './financial-goals';
 import { AddExpenseForm } from '../expenses/add-expense-form';
+import { AddGoalForm } from '../goals/add-goal-form';
 import { BudgetEditor } from '../budget/budget-editor';
 import { useToast } from '@/hooks/use-toast';
 import { Logo } from '@/components/ui/logo';
@@ -24,16 +26,20 @@ import { Logo } from '@/components/ui/logo';
 interface DashboardPageProps {
   initialExpenses: Expense[];
   initialBudgets: Budget[];
+  initialGoals: FinancialGoal[];
 }
 
 export function DashboardPage({
   initialExpenses,
   initialBudgets,
+  initialGoals,
 }: DashboardPageProps) {
   const [expenses, setExpenses] = useState<Expense[]>(initialExpenses);
   const [budgets, setBudgets] = useState<Budget[]>(initialBudgets);
+  const [goals, setGoals] = useState<FinancialGoal[]>(initialGoals);
   const [isAddExpenseOpen, setAddExpenseOpen] = useState(false);
   const [isBudgetEditorOpen, setBudgetEditorOpen] = useState(false);
+  const [isAddGoalOpen, setAddGoalOpen] = useState(false);
   const { toast } = useToast();
 
   const { totalSpent, totalBudget, remainingBudget } = useMemo(() => {
@@ -57,6 +63,15 @@ export function DashboardPage({
     });
   };
 
+  const addGoal = (newGoal: Omit<FinancialGoal, 'id' | 'currentAmount'>) => {
+    const goalWithId = { ...newGoal, id: crypto.randomUUID(), currentAmount: 0 };
+    setGoals((prev) => [...prev, goalWithId]);
+    toast({
+      title: 'Goal Added',
+      description: `Your new goal "${newGoal.name}" has been set.`,
+    });
+  };
+
   const updateBudgets = (updatedBudgets: Budget[]) => {
     setBudgets(updatedBudgets);
     toast({
@@ -73,6 +88,25 @@ export function DashboardPage({
           <h1 className="text-xl font-bold text-foreground">FinTrack</h1>
         </div>
         <div className="ml-auto flex items-center gap-2">
+           <Dialog open={isAddGoalOpen} onOpenChange={setAddGoalOpen}>
+            <DialogTrigger asChild>
+              <Button variant="outline" size="sm">
+                <Target className="h-4 w-4 mr-2" />
+                Add Goal
+              </Button>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Add a New Financial Goal</DialogTitle>
+              </DialogHeader>
+              <AddGoalForm
+                onSuccess={(newGoal) => {
+                  addGoal(newGoal);
+                  setAddGoalOpen(false);
+                }}
+              />
+            </DialogContent>
+          </Dialog>
           <Dialog open={isBudgetEditorOpen} onOpenChange={setBudgetEditorOpen}>
             <DialogTrigger asChild>
               <Button variant="outline" size="sm">
@@ -131,6 +165,9 @@ export function DashboardPage({
           <div className="lg:col-span-3">
             <SpendingPieChart expenses={expenses} />
           </div>
+        </div>
+        <div className="grid gap-4">
+           <FinancialGoals goals={goals} />
         </div>
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
           <div className="lg:col-span-4">

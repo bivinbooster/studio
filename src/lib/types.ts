@@ -31,3 +31,10 @@ export interface Budget {
   category: CategoryID;
   amount: number;
 }
+
+export interface FinancialGoal {
+  id: string;
+  name: string;
+  targetAmount: number;
+  currentAmount: number;
+}
