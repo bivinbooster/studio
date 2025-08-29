@@ -13,10 +13,7 @@ const sentence = {
   visible: {
     opacity: 1,
     transition: {
-      delay: 0.5,
       staggerChildren: 0.08,
-      repeat: Infinity,
-      repeatDelay: 1,
     },
   },
 };
@@ -26,6 +23,12 @@ const letter = {
   visible: {
     opacity: 1,
     y: 0,
+    transition: {
+      repeat: Infinity,
+      repeatType: 'reverse' as const,
+      duration: 2,
+      repeatDelay: 5,
+    },
   },
 };
 
