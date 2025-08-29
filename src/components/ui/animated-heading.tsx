@@ -17,9 +17,6 @@ export function AnimatedHeading({ text, className }: AnimatedHeadingProps) {
       opacity: 1,
       transition: {
         staggerChildren: 0.05,
-        repeat: Infinity,
-        repeatType: 'reverse',
-        repeatDelay: 2,
       },
     },
   };
@@ -28,10 +25,16 @@ export function AnimatedHeading({ text, className }: AnimatedHeadingProps) {
     visible: {
       opacity: 1,
       y: 0,
+      textShadow: [
+        '0 0 4px rgba(160, 32, 240, 0)',
+        '0 0 8px rgba(160, 32, 240, 0.8)',
+        '0 0 4px rgba(160, 32, 240, 0)',
+      ],
       transition: {
         type: 'spring',
         damping: 12,
         stiffness: 100,
+        duration: 1.5,
       },
     },
     hidden: {
