@@ -18,6 +18,7 @@ export function AnimatedHeading({ text, className }: AnimatedHeadingProps) {
       transition: {
         staggerChildren: 0.05,
         repeat: Infinity,
+        repeatType: 'loop',
         repeatDelay: 1,
       },
     },
