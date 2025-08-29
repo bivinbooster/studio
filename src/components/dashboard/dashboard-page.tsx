@@ -10,7 +10,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
-import { PlusCircle, Settings, Target } from 'lucide-react';
+import { PlusCircle, Settings, Target, LogOut } from 'lucide-react';
 import { StatCard } from './stat-card';
 import { SpendingPieChart } from './spending-pie-chart';
 import { BudgetBarChart } from './budget-bar-chart';
@@ -23,6 +23,8 @@ import { BudgetEditor } from '../budget/budget-editor';
 import { useToast } from '@/hooks/use-toast';
 import { Logo } from '@/components/ui/logo';
 import { ContributeToGoalForm } from '../goals/contribute-to-goal-form';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 interface DashboardPageProps {
   initialExpenses: Expense[];
@@ -42,6 +44,7 @@ export function DashboardPage({
   const [isBudgetEditorOpen, setBudgetEditorOpen] = useState(false);
   const [isAddGoalOpen, setAddGoalOpen] = useState(false);
   const { toast } = useToast();
+  const router = useRouter();
 
   const { totalSpent, totalBudget, remainingBudget } = useMemo(() => {
     const spent = expenses.reduce((sum, e) => sum + e.amount, 0);
@@ -101,13 +104,18 @@ export function DashboardPage({
     });
   };
 
+  const handleLogout = () => {
+    // In a real app, you'd clear session/token here
+    router.push('/login');
+  };
+
   return (
     <div className="flex min-h-screen w-full flex-col bg-transparent">
       <header className="sticky top-0 z-30 flex h-16 items-center gap-4 border-b border-white/10 bg-background/80 px-4 backdrop-blur-sm sm:px-6">
-        <div className="flex items-center gap-3">
+        <Link href="/" className="flex items-center gap-3">
           <Logo />
           <h1 className="text-xl font-bold text-foreground">FinTrack</h1>
-        </div>
+        </Link>
         <div className="ml-auto flex items-center gap-2">
            <Dialog open={isAddGoalOpen} onOpenChange={setAddGoalOpen}>
             <DialogTrigger asChild>
@@ -167,6 +175,10 @@ export function DashboardPage({
               />
             </DialogContent>
           </Dialog>
+          <Button variant="outline" size="sm" onClick={handleLogout}>
+            <LogOut className="h-4 w-4 mr-2" />
+            Logout
+          </Button>
         </div>
       </header>
       <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8">
