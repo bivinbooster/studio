@@ -10,7 +10,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
-import { PlusCircle, Settings, Target, LogOut } from 'lucide-react';
+import { PlusCircle, Settings, Target, LogOut, Loader2 } from 'lucide-react';
 import { StatCard } from './stat-card';
 import { SpendingPieChart } from './spending-pie-chart';
 import { BudgetBarChart } from './budget-bar-chart';
@@ -25,52 +25,14 @@ import { Logo } from '@/components/ui/logo';
 import { ContributeToGoalForm } from '../goals/contribute-to-goal-form';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import * as dataService from '@/lib/data-service';
 
-interface DashboardPageProps {
-  initialExpenses: Expense[];
-  initialBudgets: Budget[];
-  initialGoals: FinancialGoal[];
-}
-
-// Helper functions to interact with localStorage
-const getFromStorage = <T,>(key: string, defaultValue: T): T => {
-  if (typeof window === 'undefined') return defaultValue;
-  try {
-    const item = window.localStorage.getItem(key);
-    // Need to handle date revival for expenses
-    if (item) {
-      if (key === 'expenses') {
-        const parsed = JSON.parse(item);
-        return parsed.map((e: any) => ({ ...e, date: new Date(e.date) })) as T;
-      }
-      return JSON.parse(item);
-    }
-    return defaultValue;
-  } catch (error) {
-    console.warn(`Error reading localStorage key "${key}":`, error);
-    return defaultValue;
-  }
-};
-
-const saveToStorage = <T,>(key: string, value: T) => {
-  if (typeof window === 'undefined') return;
-  try {
-    window.localStorage.setItem(key, JSON.stringify(value));
-  } catch (error) {
-    console.warn(`Error setting localStorage key "${key}":`, error);
-  }
-};
-
-
-export function DashboardPage({
-  initialExpenses,
-  initialBudgets,
-  initialGoals,
-}: DashboardPageProps) {
+export function DashboardPage() {
   const [expenses, setExpenses] = useState<Expense[]>([]);
   const [budgets, setBudgets] = useState<Budget[]>([]);
   const [goals, setGoals] = useState<FinancialGoal[]>([]);
   
+  const [isLoading, setIsLoading] = useState(true);
   const [isClient, setIsClient] = useState(false);
 
   const [isAddExpenseOpen, setAddExpenseOpen] = useState(false);
@@ -79,26 +41,34 @@ export function DashboardPage({
   const { toast } = useToast();
   const router = useRouter();
   
-  // Effect to load data from localStorage on component mount
+  // Effect to load data from Firestore on component mount
   useEffect(() => {
-    setExpenses(getFromStorage('expenses', initialExpenses));
-    setBudgets(getFromStorage('budgets', initialBudgets));
-    setGoals(getFromStorage('goals', initialGoals));
+    const fetchData = async () => {
+      setIsLoading(true);
+      try {
+        const [userExpenses, userBudgets, userGoals] = await Promise.all([
+          dataService.getExpenses(),
+          dataService.getBudgets(),
+          dataService.getGoals(),
+        ]);
+        setExpenses(userExpenses);
+        setBudgets(userBudgets);
+        setGoals(userGoals);
+      } catch (error) {
+        console.error("Failed to fetch data:", error);
+        toast({
+          title: "Error",
+          description: "Failed to load your data. Please try refreshing the page.",
+          variant: "destructive",
+        });
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
     setIsClient(true);
-  }, [initialExpenses, initialBudgets, initialGoals]);
-  
-  // Effects to save data to localStorage whenever it changes
-  useEffect(() => {
-    if (isClient) saveToStorage('expenses', expenses);
-  }, [expenses, isClient]);
-
-  useEffect(() => {
-    if (isClient) saveToStorage('budgets', budgets);
-  }, [budgets, isClient]);
-
-  useEffect(() => {
-    if (isClient) saveToStorage('goals', goals);
-  }, [goals, isClient]);
+  }, [toast]);
 
 
   const { totalSpent, totalBudget, remainingBudget } = useMemo(() => {
@@ -111,52 +81,86 @@ export function DashboardPage({
     };
   }, [expenses, budgets]);
 
-  const addExpense = (newExpense: Omit<Expense, 'id'>) => {
-    const expenseWithId = { ...newExpense, id: crypto.randomUUID() };
-    setExpenses((prev) =>
-      [...prev, expenseWithId].sort((a, b) => b.date.getTime() - a.date.getTime())
-    );
-    toast({
-      title: 'Expense Added',
-      description: `${newExpense.description} for $${newExpense.amount.toFixed(2)} has been logged.`,
-    });
+  const addExpense = async (newExpense: Omit<Expense, 'id'>) => {
+    try {
+      const savedExpense = await dataService.addExpense(newExpense);
+      setExpenses((prev) =>
+        [...prev, savedExpense].sort((a, b) => b.date.getTime() - a.date.getTime())
+      );
+      toast({
+        title: 'Expense Added',
+        description: `${savedExpense.description} for $${savedExpense.amount.toFixed(2)} has been logged.`,
+      });
+    } catch (error) {
+       toast({
+        title: 'Error',
+        description: 'Could not save expense. Please try again.',
+        variant: 'destructive',
+      });
+    }
   };
 
-  const addGoal = (newGoal: Omit<FinancialGoal, 'id' | 'currentAmount'>) => {
-    const goalWithId = { ...newGoal, id: crypto.randomUUID(), currentAmount: 0 };
-    setGoals((prev) => [...prev, goalWithId]);
-    toast({
-      title: 'Goal Added',
-      description: `Your new goal "${newGoal.name}" has been set.`,
-    });
+  const addGoal = async (newGoal: Omit<FinancialGoal, 'id' | 'currentAmount'>) => {
+     try {
+      const savedGoal = await dataService.addGoal(newGoal);
+      setGoals((prev) => [...prev, savedGoal]);
+      toast({
+        title: 'Goal Added',
+        description: `Your new goal "${savedGoal.name}" has been set.`,
+      });
+    } catch (error) {
+       toast({
+        title: 'Error',
+        description: 'Could not save goal. Please try again.',
+        variant: 'destructive',
+      });
+    }
   };
 
-  const contributeToGoal = (goalId: string, amount: number) => {
-    setGoals((prevGoals) =>
-      prevGoals.map((goal) => {
-        if (goal.id === goalId) {
-          const newCurrentAmount = goal.currentAmount + amount;
-          return {
-            ...goal,
-            currentAmount: Math.min(newCurrentAmount, goal.targetAmount), // Cap at target amount
-          };
-        }
-        return goal;
-      })
-    );
-    const goal = goals.find((g) => g.id === goalId);
-    toast({
-      title: 'Contribution Added',
-      description: `You added ${amount.toFixed(2)} to your "${goal?.name}" goal.`,
-    });
+  const contributeToGoal = async (goalId: string, amount: number) => {
+    try {
+      await dataService.contributeToGoal(goalId, amount);
+      setGoals((prevGoals) =>
+        prevGoals.map((goal) => {
+          if (goal.id === goalId) {
+            const newCurrentAmount = goal.currentAmount + amount;
+            return {
+              ...goal,
+              currentAmount: Math.min(newCurrentAmount, goal.targetAmount),
+            };
+          }
+          return goal;
+        })
+      );
+      const goal = goals.find((g) => g.id === goalId);
+      toast({
+        title: 'Contribution Added',
+        description: `You added ${amount.toFixed(2)} to your "${goal?.name}" goal.`,
+      });
+    } catch (error) {
+      toast({
+        title: 'Error',
+        description: 'Could not add contribution. Please try again.',
+        variant: 'destructive',
+      });
+    }
   };
 
-  const updateBudgets = (updatedBudgets: Budget[]) => {
-    setBudgets(updatedBudgets);
-    toast({
-      title: 'Budgets Updated',
-      description: 'Your new budget goals have been saved.',
-    });
+  const updateBudgets = async (updatedBudgets: Budget[]) => {
+    try {
+      await dataService.saveBudgets(updatedBudgets);
+      setBudgets(updatedBudgets);
+      toast({
+        title: 'Budgets Updated',
+        description: 'Your new budget goals have been saved.',
+      });
+    } catch (error) {
+      toast({
+        title: 'Error',
+        description: 'Could not update budgets. Please try again.',
+        variant: 'destructive',
+      });
+    }
   };
 
   const handleLogout = () => {
@@ -164,9 +168,13 @@ export function DashboardPage({
     router.push('/login');
   };
   
-  if (!isClient) {
-    // You can return a loading spinner or a skeleton UI here
-    return null;
+  if (!isClient || isLoading) {
+    return (
+      <div className="flex min-h-screen w-full flex-col items-center justify-center bg-transparent">
+        <Loader2 className="h-12 w-12 animate-spin text-primary" />
+        <p className="mt-4 text-muted-foreground">Loading your financial data...</p>
+      </div>
+    );
   }
 
   return (
