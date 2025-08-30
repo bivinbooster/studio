@@ -24,7 +24,7 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body className="font-body antialiased relative">
+      <body className="font-body antialiased">
         {children}
         <Toaster />
       </body>
