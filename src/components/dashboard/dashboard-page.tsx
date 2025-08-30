@@ -289,11 +289,11 @@ export function DashboardPage() {
         <div className="grid gap-4">
            <FinancialGoals goals={goals} onContribute={contributeToGoal} />
         </div>
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
-          <div className="lg:col-span-4">
+        <div className="grid grid-cols-1 gap-4">
+          <div className="lg:col-span-7">
             <RecentExpenses expenses={expenses} onDelete={deleteExpense} />
           </div>
-          <div className="lg:col-span-3">
+          <div className="lg:col-span-7">
             <SpendingInsights expenses={expenses} budgets={budgets} />
           </div>
         </div>
