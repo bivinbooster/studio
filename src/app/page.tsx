@@ -38,11 +38,27 @@ export default function Home() {
               AI-powered insights.
             </p>
             <div className="mt-8 flex justify-center gap-4">
-               <Button size="lg" asChild>
+              <motion.div
+                animate={{
+                  y: ['-0.25rem', '0.25rem', '-0.25rem'],
+                }}
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                  repeatType: 'loop',
+                  ease: 'easeInOut',
+                }}
+              >
+                <Button
+                  size="lg"
+                  asChild
+                  className="shadow-[0_0_15px_hsl(var(--primary)/0.5)] transition-shadow hover:shadow-[0_0_25px_hsl(var(--primary)/0.8)]"
+                >
                   <Link href="/register">
                     Get Started for Free <ArrowRight className="ml-2" />
                   </Link>
                 </Button>
+              </motion.div>
             </div>
           </div>
         </section>
