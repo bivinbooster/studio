@@ -17,7 +17,7 @@ export function Background() {
         />
         Your browser does not support the video tag.
       </video>
-      <div className="absolute inset-0 bg-black/50" />
+      <div className="absolute inset-0 bg-black/70" />
     </div>
   );
 }
