@@ -15,7 +15,7 @@ const Card = React.forwardRef<
       className
     )}
   >
-    <div className="absolute -inset-0.5 z-0 animate-spin rounded-lg bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)] opacity-0 blur-lg transition-all duration-500 group-hover:opacity-100 group-hover:duration-200" />
+    <div className="absolute -inset-1.5 z-0 animate-spin rounded-lg bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)] opacity-0 blur-xl transition-all duration-500 group-hover:opacity-100 group-hover:duration-200" />
     <div className="relative z-10 h-full w-full rounded-lg bg-card p-0">
       {props.children}
     </div>
