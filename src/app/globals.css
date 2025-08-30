@@ -129,60 +129,55 @@
     border-radius: calc(var(--radius) - var(--border-size));
   }
 
-  @keyframes twinkle {
-    0%, 100% { opacity: 0.5; transform: scale(1); }
-    50% { opacity: 1; transform: scale(1.1); }
-  }
-
-  .star {
-    position: absolute;
-    background: white;
-    border-radius: 50%;
-    animation: twinkle linear infinite;
-  }
-
   /* Falling Stars */
   @keyframes fall {
-    0% { transform: translate3d(-100px, -100px, 0) scale(1); opacity: 1; }
-    100% { transform: translate3d(calc(100vw + 100px), calc(100vh + 100px), 0) scale(0.5); opacity: 0; }
+    0% {
+      transform: translateX(0) translateY(0) rotate(45deg);
+      opacity: 1;
+    }
+    100% {
+      transform: translateX(-100vw) translateY(100vh) rotate(45deg);
+      opacity: 0;
+    }
   }
 
   #stars, #stars2, #stars3 {
     position: absolute;
     top: 0;
-    left: 0;
-    width: 100%;
+    right: 0;
+    width: 0;
     height: 100%;
-    overflow: hidden;
+    transform: rotate(45deg);
   }
 
   #stars::after, #stars2::after, #stars3::after {
     content: "";
     position: absolute;
     width: 2px;
-    height: 2px;
-    background: white;
+    height: 150px; /* This creates the tail */
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0), #FFFFFF);
     border-radius: 50%;
     box-shadow: 
       /* Layer 1 */
-      1520px 888px #FFF, 1298px 97px #FFF, 128px 129px #FFF, 1073px 569px #FFF, 1081px 311px #FFF, 1137px 461px #FFF, 1494px 592px #FFF, 112px 387px #FFF, 133px 440px #FFF, 1318px 432px #FFF, 622px 145px #FFF, 137px 119px #FFF, 1474px 393px #FFF, 1341px 233px #FFF, 226px 421px #FFF,
+      -200px 200px 2px #fff, 300px -400px 2px #fff, 500px 100px 2px #fff,
+      -800px -150px 2px #fff, 100px 800px 2px #fff, -1200px 500px 2px #fff,
       /* Layer 2 */
-      2000px 1000px #FFF, 1800px 200px #FFF, 300px 500px #FFF, 1600px 800px #FFF, 900px 100px #FFF, 400px 1200px #FFF,
+      -50px 1000px 2px #fff, 900px -100px 2px #fff, -1500px 250px 2px #fff,
+      400px 1200px 2px #fff, -900px -600px 2px #fff, 1400px 300px 2px #fff,
       /* Layer 3 */
-      2200px 500px #FFF, 100px 1400px #FFF, 1700px 1100px #FFF, 600px 1300px #FFF, 2400px 200px #FFF, 1900px 700px #FFF;
-    animation: fall 20s linear infinite;
+      -1800px 600px 2px #fff, 700px -1300px 2px #fff, 1600px 800px 2px #fff,
+      -300px 1400px 2px #fff, 1100px -200px 2px #fff, -2000px 900px 2px #fff;
+    animation: fall 10s linear infinite;
   }
 
   #stars2::after {
-    animation-delay: -10s; /* Stagger the animation */
-    animation-duration: 25s;
-    transform-origin: -10% -10%;
+    animation-delay: -5s; /* Stagger the animation */
+    animation-duration: 12s;
   }
 
   #stars3::after {
-    animation-delay: -5s; /* Stagger the animation */
-    animation-duration: 30s;
-     transform-origin: 50% 50%;
+    animation-delay: -2s; /* Stagger the animation */
+    animation-duration: 8s;
   }
 
 }
