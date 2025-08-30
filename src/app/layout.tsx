@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import { Toaster } from '@/components/ui/toaster';
+import { SnowfallBackground } from '@/components/ui/snowfall-background';
 
 
 export const metadata: Metadata = {
@@ -25,6 +26,7 @@ export default function RootLayout({
         />
       </head>
       <body className="font-body antialiased">
+        <SnowfallBackground />
         <main className="relative flex flex-col min-h-screen">
           {children}
         </main>
