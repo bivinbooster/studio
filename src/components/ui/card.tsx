@@ -15,7 +15,7 @@ const Card = React.forwardRef<
     )}
     {...props}
   >
-    {children}
+    <div className="h-full w-full rounded-lg bg-card p-0">{children}</div>
   </div>
 ));
 Card.displayName = 'Card';
