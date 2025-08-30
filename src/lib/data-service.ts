@@ -93,8 +93,43 @@ export async function addExpense(
 
 // Delete an expense
 export async function deleteExpense(expenseId: string): Promise<void> {
+  // Ignore temporary IDs from the client
+  if (expenseId.startsWith('temp-')) return;
   const expenseRef = doc(db, 'expenses', expenseId);
   await deleteDoc(expenseRef);
+}
+
+// Save all expenses for the user (uses a batch write)
+export async function saveExpenses(expenses: Expense[]): Promise<void> {
+  const batch = writeBatch(db);
+  const expensesCollection = collection(db, 'expenses').withConverter(expenseConverter);
+
+  // First, get all existing expenses for the user
+  const q = query(expensesCollection, where('userId', '==', userId));
+  const querySnapshot = await getDocs(q);
+  const existingExpenses = new Map(querySnapshot.docs.map(d => [d.id, d.data()]));
+  const draftExpenseIds = new Set(expenses.map(e => e.id));
+
+  // Delete expenses that are in Firestore but not in the draft state
+  for (const [id] of existingExpenses) {
+    if (!draftExpenseIds.has(id)) {
+      batch.delete(doc(db, 'expenses', id));
+    }
+  }
+
+  // Create or update expenses from the draft state
+  expenses.forEach(expense => {
+    if (expense.id.startsWith('temp-')) {
+      // This is a new expense, create it
+      const docRef = doc(expensesCollection);
+      const { id, ...expenseData } = expense;
+      batch.set(docRef, expenseData as Omit<Expense, 'id'>);
+    } else {
+       // This is an existing expense, we don't support updating expenses for now
+    }
+  });
+
+  await batch.commit();
 }
 
 
@@ -168,6 +203,8 @@ export async function contributeToGoal(
   goalId: string,
   amount: number
 ): Promise<void> {
+  // Ignore temporary IDs from the client
+  if (goalId.startsWith('temp-')) return;
   const goalRef = doc(db, 'goals', goalId);
   await updateDoc(goalRef, {
     currentAmount: increment(amount),
@@ -176,6 +213,40 @@ export async function contributeToGoal(
 
 // Delete a financial goal
 export async function deleteGoal(goalId: string): Promise<void> {
+  // Ignore temporary IDs from the client
+  if (goalId.startsWith('temp-')) return;
   const goalRef = doc(db, 'goals', goalId);
   await deleteDoc(goalRef);
+}
+
+// Save all goals for the user
+export async function saveGoals(goals: FinancialGoal[]): Promise<void> {
+    const batch = writeBatch(db);
+    const goalsCollection = collection(db, 'goals').withConverter(goalConverter);
+
+    const q = query(goalsCollection, where('userId', '==', userId));
+    const querySnapshot = await getDocs(q);
+    const existingGoals = new Map(querySnapshot.docs.map(d => [d.id, d.data()]));
+    const draftGoalIds = new Set(goals.map(g => g.id));
+
+    // Delete goals that are no longer in the draft state
+    for (const [id] of existingGoals) {
+        if (!draftGoalIds.has(id)) {
+            batch.delete(doc(db, 'goals', id));
+        }
+    }
+
+    // Create or update goals from the draft state
+    goals.forEach(goal => {
+        if (goal.id.startsWith('temp-')) {
+            const docRef = doc(goalsCollection);
+            const { id, ...goalData } = goal;
+            batch.set(docRef, goalData as Omit<FinancialGoal, 'id'>);
+        } else {
+            const docRef = doc(db, 'goals', goal.id);
+            batch.update(docRef, { currentAmount: goal.currentAmount });
+        }
+    });
+
+    await batch.commit();
 }
