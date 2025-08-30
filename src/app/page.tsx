@@ -5,6 +5,7 @@ import { Logo } from '@/components/ui/logo';
 import { ArrowRight } from 'lucide-react';
 import { AnimatedHeading } from '@/components/ui/animated-heading';
 import { motion } from 'framer-motion';
+import { AnimatedGridBackground } from '@/components/ui/animated-grid-background';
 
 export default function Home() {
   return (
@@ -27,6 +28,7 @@ export default function Home() {
       </header>
       <main className="flex-1">
         <section className="relative w-full h-[80vh] flex items-center justify-center text-center">
+          <AnimatedGridBackground />
           <div className="relative z-10 max-w-4xl px-4">
             <AnimatedHeading
               className="text-4xl font-extrabold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl text-transparent bg-clip-text bg-gradient-to-r from-primary via-purple-400 to-accent text-glow"
