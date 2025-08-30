@@ -67,14 +67,3 @@
     @apply bg-background text-foreground;
   }
 }
-
-@layer utilities {
-  @keyframes border-glow {
-    0% {
-      transform: rotate(0deg);
-    }
-    100% {
-      transform: rotate(360deg);
-    }
-  }
-}
