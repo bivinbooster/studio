@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import { Toaster } from '@/components/ui/toaster';
-import { Background } from '@/components/ui/background';
+import { GridBackground } from '@/components/ui/grid-background';
 
 export const metadata: Metadata = {
   title: 'FinTrack',
@@ -25,7 +25,7 @@ export default function RootLayout({
         />
       </head>
       <body className="font-body antialiased relative">
-        <Background />
+        <GridBackground />
         {children}
         <Toaster />
       </body>
