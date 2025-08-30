@@ -55,6 +55,13 @@ export function BudgetBarChart({ expenses, budgets }: BudgetBarChartProps) {
     },
   };
 
+  const formatYAxis = (value: number) => {
+    if (value >= 1000) {
+      return `$${value / 1000}k`;
+    }
+    return `$${value}`;
+  }
+
   return (
     <Card>
       <CardHeader>
@@ -75,9 +82,7 @@ export function BudgetBarChart({ expenses, budgets }: BudgetBarChartProps) {
               tickFormatter={(value) => value.slice(0, 3)}
             />
             <YAxis
-              tickFormatter={(value) =>
-                formatCurrency(Number(value)).replace('.00', '')
-              }
+              tickFormatter={formatYAxis}
             />
             <ChartTooltip content={<ChartTooltipContent formatter={(value, name) => <span>{`${chartConfig[name as keyof typeof chartConfig].label}: ${formatCurrency(Number(value))}`}</span>} />} />
             <ChartLegend content={<ChartLegendContent />} />
