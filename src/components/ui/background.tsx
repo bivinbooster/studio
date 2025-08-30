@@ -12,7 +12,7 @@ export function Background() {
       >
         {/* You can replace this with your own video file */}
         <source
-          src="https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4"
+          src="https://storage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4"
           type="video/mp4"
         />
         Your browser does not support the video tag.
