@@ -5,11 +5,10 @@ import { Logo } from '@/components/ui/logo';
 import { ArrowRight } from 'lucide-react';
 import { AnimatedHeading } from '@/components/ui/animated-heading';
 import { motion } from 'framer-motion';
-import { StarBackground } from '@/components/ui/star-background';
 
 export default function Home() {
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col flex-1 w-full">
       <header className="sticky top-0 z-30 flex h-16 items-center gap-4 border-b border-white/10 bg-background/80 px-4 backdrop-blur-sm sm:px-6 justify-between">
         <div className="flex items-center gap-3">
           <Logo />
@@ -26,8 +25,7 @@ export default function Home() {
           </Button>
         </div>
       </header>
-      <main className="flex-1 relative">
-        <StarBackground />
+      <main className="flex-1">
         <section className="relative w-full h-[80vh] flex items-center justify-center text-center">
           <div className="relative z-10 max-w-4xl px-4">
             <AnimatedHeading
