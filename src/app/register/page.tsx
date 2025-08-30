@@ -11,7 +11,7 @@ export default function RegisterPage() {
           <Logo />
           <h1 className="text-2xl font-bold text-foreground">FinTrack</h1>
         </Link>
-        <Card className="hover:shadow-[0_0_50px_10px_rgba(138,43,226,0.3)]">
+        <Card>
           <CardHeader>
             <CardTitle className="text-2xl text-center">Create an Account</CardTitle>
             <CardDescription className="text-center">

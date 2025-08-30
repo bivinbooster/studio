@@ -12,25 +12,9 @@ export default function Home() {
       <header className="sticky top-0 z-30 flex h-16 items-center gap-4 border-b border-white/10 bg-background/80 px-4 backdrop-blur-sm sm:px-6 justify-between">
         <div className="flex items-center gap-3">
           <Logo />
-          <motion.h1
-            className="text-xl font-bold text-foreground"
-            animate={{
-              textShadow: [
-                '0 0 4px rgba(160, 32, 240, 0)',
-                '0 0 8px rgba(160, 32, 240, 0.8)',
-                '0 0 12px rgba(160, 32, 240, 0.8)',
-                '0 0 8px rgba(160, 32, 240, 0.8)',
-                '0 0 4px rgba(160, 32, 240, 0)',
-              ],
-            }}
-            transition={{
-              duration: 2.5,
-              repeat: Infinity,
-              repeatType: 'mirror',
-            }}
-          >
+          <h1 className="text-xl font-bold text-foreground">
             FinTrack
-          </motion.h1>
+          </h1>
         </div>
         <div className="flex items-center gap-2">
           <Button variant="outline" size="sm" asChild>
@@ -54,29 +38,11 @@ export default function Home() {
               AI-powered insights.
             </p>
             <div className="mt-8 flex justify-center gap-4">
-              <motion.div
-                animate={{
-                  y: [0, -8, 0],
-                  boxShadow: [
-                    '0 0 0px 0px rgba(160, 32, 240, 0)',
-                    '0 0 20px 5px rgba(160, 32, 240, 0.7)',
-                    '0 0 0px 0px rgba(160, 32, 240, 0)',
-                  ],
-                }}
-                transition={{
-                  duration: 2,
-                  repeat: Infinity,
-                  repeatType: 'mirror',
-                  ease: 'easeInOut',
-                }}
-                className="rounded-md"
-              >
-                <Button size="lg" asChild>
+               <Button size="lg" asChild>
                   <Link href="/register">
                     Get Started for Free <ArrowRight className="ml-2" />
                   </Link>
                 </Button>
-              </motion.div>
             </div>
           </div>
         </section>

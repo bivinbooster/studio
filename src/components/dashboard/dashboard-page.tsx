@@ -45,7 +45,7 @@ export function DashboardPage() {
   const [isSaving, setIsSaving] = useState(false);
 
   const [isAddExpenseOpen, setAddExpenseOpen] = useState(false);
-  const [isBudgetEditorOpen, setBudgetEditorOpen] = useState(false);
+  const [isBudgetEditorOpen, setBudgetEditorOpen]   = useState(false);
   const [isAddGoalOpen, setAddGoalOpen] = useState(false);
   const { toast } = useToast();
   const router = useRouter();
@@ -283,11 +283,11 @@ export function DashboardPage() {
         <div className="grid gap-4">
            <FinancialGoals goals={goals} onContribute={contributeToGoal} onDelete={deleteGoal} isEditMode={isEditMode} />
         </div>
-        <div className="grid grid-cols-1 gap-4 lg:grid-cols-7">
-          <div className="lg:col-span-7">
+        <div className="grid grid-cols-1 gap-4 lg:grid-cols-1">
+          <div className="lg:col-span-1">
             <RecentExpenses expenses={expenses} onDelete={deleteExpense} isEditMode={isEditMode} />
           </div>
-          <div className="lg:col-span-7">
+          <div className="lg:col-span-1">
             <SpendingInsights expenses={expenses} budgets={budgets} />
           </div>
         </div>
