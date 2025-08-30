@@ -9,14 +9,11 @@ const Card = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      'rounded-lg border bg-card text-card-foreground shadow-sm relative group overflow-hidden',
-      'before:absolute before:inset-0 before:bg-[conic-gradient(from_90deg_at_50%_50%,#8b5cf6_0%,#3b82f6_50%,#8b5cf6_100%)] before:content-[\'\'] before:animate-[spin_4s_linear_infinite] before:opacity-0 hover:before:opacity-100',
-      'after:absolute after:inset-[1px] after:bg-card after:content-[\'\']',
+      'rounded-lg border bg-card text-card-foreground shadow-sm',
       className
     )}
-  >
-    <div className="relative z-10 h-full">{props.children}</div>
-  </div>
+    {...props}
+  />
 ));
 Card.displayName = 'Card';
 
