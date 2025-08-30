@@ -173,3 +173,9 @@ export async function contributeToGoal(
     currentAmount: increment(amount),
   });
 }
+
+// Delete a financial goal
+export async function deleteGoal(goalId: string): Promise<void> {
+  const goalRef = doc(db, 'goals', goalId);
+  await deleteDoc(goalRef);
+}

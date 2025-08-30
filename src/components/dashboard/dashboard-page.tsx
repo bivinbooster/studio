@@ -165,6 +165,23 @@ export function DashboardPage() {
     }
   };
 
+  const deleteGoal = async (goalId: string) => {
+    try {
+      await dataService.deleteGoal(goalId);
+      setGoals((prev) => prev.filter((g) => g.id !== goalId));
+      toast({
+        title: 'Goal Deleted',
+        description: 'The financial goal has been successfully removed.',
+      });
+    } catch (error) {
+      toast({
+        title: 'Error',
+        description: 'Could not delete goal. Please try again.',
+        variant: 'destructive',
+      });
+    }
+  };
+
   const updateBudgets = async (updatedBudgets: Budget[]) => {
     try {
       await dataService.saveBudgets(updatedBudgets);
@@ -287,9 +304,9 @@ export function DashboardPage() {
           </div>
         </div>
         <div className="grid gap-4">
-           <FinancialGoals goals={goals} onContribute={contributeToGoal} />
+           <FinancialGoals goals={goals} onContribute={contributeToGoal} onDelete={deleteGoal} />
         </div>
-        <div className="grid grid-cols-1 gap-4">
+        <div className="grid grid-cols-1 gap-4 lg:grid-cols-7">
           <div className="lg:col-span-7">
             <RecentExpenses expenses={expenses} onDelete={deleteExpense} />
           </div>
