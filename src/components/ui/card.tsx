@@ -10,26 +10,28 @@ const Card = React.forwardRef<
     ref={ref}
     className={cn(
       'relative overflow-hidden rounded-lg border bg-card text-card-foreground shadow-sm transition-all duration-300',
-      'before:absolute before:inset-0 before:-z-10 before:bg-[radial-gradient(circle_500px_at_50%_200px,hsl(var(--primary)/0.15),transparent)] before:opacity-0 before:transition-opacity before:duration-300',
-      'hover:before:opacity-100',
-      'after:absolute after:inset-0 after:-z-20 after:bg-card',
       'group',
       className
     )}
-    {...props}
   >
     <div
       className={cn(
-        'absolute -inset-px -z-10 rounded-lg bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)] opacity-0 transition-opacity duration-300 group-hover:opacity-100',
-        'animate-[spin_2s_linear_infinite]'
+        'absolute -inset-px z-0 rounded-lg bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)] opacity-0 transition-opacity duration-300 group-hover:opacity-100'
       )}
       style={{
+        animation: 'spin 2s linear infinite',
         animationPlayState: 'paused',
       }}
-      onMouseEnter={(e) => (e.currentTarget.style.animationPlayState = 'running')}
-      onMouseLeave={(e) => (e.currentTarget.style.animationPlayState = 'paused')}
+      onMouseEnter={(e) => {
+        e.currentTarget.style.animationPlayState = 'running';
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.animationPlayState = 'paused';
+      }}
     />
-    <div className="rounded-lg bg-card p-0">{props.children}</div>
+    <div className="relative z-10 h-full w-full rounded-[7px] bg-card">
+      {props.children}
+    </div>
   </div>
 ));
 Card.displayName = 'Card';
