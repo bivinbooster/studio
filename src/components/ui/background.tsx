@@ -1,5 +1,6 @@
 'use client';
 import { useState, useEffect } from 'react';
+import { ShootingStar } from './shooting-star';
 
 const STAR_COUNT = 100;
 
@@ -48,6 +49,10 @@ export function Background() {
           );
         })}
       </div>
+      <ShootingStar style={{ top: '0px', right: '0px', animationDelay: '0s', animationDuration: '3s' }} />
+      <ShootingStar style={{ top: '0px', right: '800px', animationDelay: '1.4s', animationDuration: '2s' }} />
+      <ShootingStar style={{ top: '0px', right: '1200px', animationDelay: '3s', animationDuration: '4s' }} />
+      <ShootingStar style={{ top: '0px', right: '1800px', animationDelay: '5s', animationDuration: '2.5s' }} />
     </div>
   );
 }
