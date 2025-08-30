@@ -5,6 +5,7 @@ import { Logo } from '@/components/ui/logo';
 import { ArrowRight } from 'lucide-react';
 import { AnimatedHeading } from '@/components/ui/animated-heading';
 import { motion } from 'framer-motion';
+import { ThreeDAvatar } from '@/components/ui/3d-avatar';
 
 export default function Home() {
   return (
@@ -61,6 +62,7 @@ export default function Home() {
               </motion.div>
             </div>
           </div>
+          <ThreeDAvatar />
         </section>
       </main>
     </div>
