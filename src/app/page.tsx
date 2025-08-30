@@ -52,7 +52,7 @@ export default function Home() {
                 <Button
                   size="lg"
                   asChild
-                  className="relative"
+                  className="relative animate-intense-glow"
                 >
                   <Link href="/register">
                     Get Started for Free <ArrowRight className="ml-2" />
