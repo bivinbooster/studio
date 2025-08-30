@@ -9,7 +9,7 @@ import {
   ShoppingCart,
   MoreHorizontal,
 } from 'lucide-react';
-import type { Category, Expense, Budget, CategoryID, FinancialGoal } from './types';
+import type { Category, CategoryID } from './types';
 
 export const CATEGORIES: Category[] = [
   {
@@ -69,87 +69,3 @@ export const getCategoryById = (id: CategoryID): Category => {
     CATEGORIES.find((c) => c.id === 'other')!
   );
 };
-
-// Helper to create dates relative to today for dynamic sample data
-const daysAgo = (days: number): Date => {
-  const date = new Date();
-  date.setDate(date.getDate() - days);
-  return date;
-};
-
-export const SAMPLE_EXPENSES: Expense[] = [
-  {
-    id: '1',
-    amount: 12.5,
-    category: 'food',
-    date: daysAgo(1),
-    description: 'Lunch at cafe',
-    isRecurring: false,
-  },
-  {
-    id: '2',
-    amount: 35.0,
-    category: 'transport',
-    date: daysAgo(2),
-    description: 'Monthly metro pass',
-    isRecurring: true,
-  },
-  {
-    id: '3',
-    amount: 210.99,
-    category: 'shopping',
-    date: daysAgo(2),
-    description: 'New running shoes',
-    isRecurring: false,
-  },
-  {
-    id: '4',
-    amount: 1200.0,
-    category: 'housing',
-    date: daysAgo(3),
-    description: 'Rent',
-    isRecurring: true,
-  },
-  {
-    id: '5',
-    amount: 75.8,
-    category: 'utilities',
-    date: daysAgo(4),
-    description: 'Electricity bill',
-    isRecurring: true,
-  },
-  {
-    id: '6',
-    amount: 45.0,
-    category: 'entertainment',
-    date: daysAgo(5),
-    description: 'Movie tickets',
-    isRecurring: false,
-  },
-  {
-    id: '7',
-    amount: 63.25,
-    category: 'food',
-    date: daysAgo(5),
-    description: 'Groceries for the week',
-    isRecurring: false,
-  },
-];
-
-export const SAMPLE_BUDGETS: Budget[] = [
-  { category: 'food', amount: 400 },
-  { category: 'transport', amount: 150 },
-  { category: 'entertainment', amount: 100 },
-  { category: 'housing', amount: 1200 },
-  { category: 'utilities', amount: 150 },
-  { category: 'health', amount: 100 },
-  { category: 'personal', amount: 80 },
-  { category: 'shopping', amount: 250 },
-  { category: 'other', amount: 50 },
-];
-
-export const SAMPLE_GOALS: FinancialGoal[] = [
-    { id: '1', name: 'Dream Vacation', targetAmount: 5000, currentAmount: 1250 },
-    { id: '2', name: 'New Laptop', targetAmount: 2000, currentAmount: 1800 },
-    { id: '3', name: 'Emergency Fund', targetAmount: 10000, currentAmount: 4000 },
-];
