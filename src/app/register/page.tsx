@@ -1,6 +1,6 @@
 import { RegistrationForm } from '@/components/auth/registration-form';
 import { Logo } from '@/components/ui/logo';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Card, BareCardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import Link from 'next/link';
 
 export default function RegisterPage() {
@@ -18,7 +18,7 @@ export default function RegisterPage() {
               Start your journey to financial freedom.
             </CardDescription>
           </CardHeader>
-          <CardContent>
+          <BareCardContent>
             <RegistrationForm />
             <p className="mt-4 text-center text-sm text-muted-foreground">
               Already have an account?{' '}
@@ -29,7 +29,7 @@ export default function RegisterPage() {
                 Log in
               </Link>
             </p>
-          </CardContent>
+          </BareCardContent>
         </Card>
       </div>
     </div>

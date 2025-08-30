@@ -5,7 +5,7 @@ import type { Expense, Budget } from '@/lib/types';
 import { CATEGORIES } from '@/lib/constants';
 import {
   Card,
-  CardContent,
+  BareCardContent,
   CardHeader,
   CardTitle,
   CardDescription,
@@ -70,7 +70,7 @@ export function BudgetBarChart({ expenses, budgets }: BudgetBarChartProps) {
           How your spending compares to your budget goals.
         </CardDescription>
       </CardHeader>
-      <CardContent>
+      <BareCardContent>
         {chartData.length > 0 ? (
         <ChartContainer config={chartConfig} className="min-h-[300px] w-full">
           <BarChart data={chartData} accessibilityLayer>
@@ -95,7 +95,7 @@ export function BudgetBarChart({ expenses, budgets }: BudgetBarChartProps) {
             No budget or spending data to display.
           </div>
         )}
-      </CardContent>
+      </BareCardContent>
     </Card>
   );
 }

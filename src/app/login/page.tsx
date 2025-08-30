@@ -1,6 +1,6 @@
 import { LoginForm } from '@/components/auth/login-form';
 import { Logo } from '@/components/ui/logo';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, BareCardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import Link from 'next/link';
 
 export default function LoginPage() {
@@ -15,7 +15,7 @@ export default function LoginPage() {
           <CardHeader>
             <CardTitle className="text-2xl text-center">Welcome Back</CardTitle>
           </CardHeader>
-          <CardContent>
+          <BareCardContent>
             <LoginForm />
             <p className="mt-4 text-center text-sm text-muted-foreground">
               Don't have an account?{' '}
@@ -26,7 +26,7 @@ export default function LoginPage() {
                 Sign up
               </Link>
             </p>
-          </CardContent>
+          </BareCardContent>
         </Card>
       </div>
     </div>

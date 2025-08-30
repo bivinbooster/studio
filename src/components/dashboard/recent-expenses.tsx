@@ -5,7 +5,7 @@ import { getCategoryById } from '@/lib/constants';
 import { format } from 'date-fns';
 import {
   Card,
-  CardContent,
+  BareCardContent,
   CardHeader,
   CardTitle,
   CardDescription,
@@ -47,7 +47,7 @@ export function RecentExpenses({ expenses, onDelete }: RecentExpensesProps) {
         <CardTitle>Recent Transactions</CardTitle>
         <CardDescription>Your five most recent expenses.</CardDescription>
       </CardHeader>
-      <CardContent>
+      <BareCardContent>
         <Table>
           <TableHeader>
             <TableRow>
@@ -117,7 +117,7 @@ export function RecentExpenses({ expenses, onDelete }: RecentExpensesProps) {
             )}
           </TableBody>
         </Table>
-      </CardContent>
+      </BareCardContent>
     </Card>
   );
 }

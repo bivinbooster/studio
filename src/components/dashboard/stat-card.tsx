@@ -1,5 +1,5 @@
 'use client';
-import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
+import { Card, CardHeader, CardTitle, BareCardContent } from '@/components/ui/card';
 import { useCountUp } from '@/hooks/use-count-up';
 
 interface StatCardProps {
@@ -34,13 +34,13 @@ export function StatCard({ title, value, type = 'number' }: StatCardProps) {
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
         <CardTitle className="text-sm font-medium">{title}</CardTitle>
       </CardHeader>
-      <CardContent>
+      <BareCardContent>
         <div
           className={`text-2xl font-bold ${isNegative ? 'text-destructive' : 'text-foreground'}`}
         >
           {formatValue(animatedValue)}
         </div>
-      </CardContent>
+      </BareCardContent>
     </Card>
   );
 }
