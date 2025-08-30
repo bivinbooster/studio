@@ -48,11 +48,13 @@ export default function Home() {
                   repeatType: 'loop',
                   ease: 'easeInOut',
                 }}
+                className="group relative"
               >
+                <div className="absolute -inset-0.5 rounded-lg bg-gradient-to-r from-primary via-accent to-purple-600 opacity-75 blur transition duration-1000 group-hover:opacity-100 group-hover:duration-200 animate-tilt"></div>
                 <Button
                   size="lg"
                   asChild
-                  className="shadow-[0_0_15px_hsl(var(--primary)/0.5)] transition-shadow hover:shadow-[0_0_25px_hsl(var(--primary)/0.8)]"
+                  className="relative"
                 >
                   <Link href="/register">
                     Get Started for Free <ArrowRight className="ml-2" />
