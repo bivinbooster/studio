@@ -36,10 +36,9 @@ import {
 interface RecentExpensesProps {
   expenses: Expense[];
   onDelete: (id: string) => void;
-  isEditMode: boolean;
 }
 
-export function RecentExpenses({ expenses, onDelete, isEditMode }: RecentExpensesProps) {
+export function RecentExpenses({ expenses, onDelete }: RecentExpensesProps) {
   const recentExpenses = expenses.slice(0, 5);
 
   return (
@@ -56,7 +55,7 @@ export function RecentExpenses({ expenses, onDelete, isEditMode }: RecentExpense
               <TableHead className="hidden sm:table-cell">Category</TableHead>
               <TableHead className="hidden sm:table-cell">Date</TableHead>
               <TableHead className="text-right">Amount</TableHead>
-              {isEditMode && <TableHead className="text-right">Actions</TableHead>}
+              <TableHead className="text-right">Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -77,41 +76,39 @@ export function RecentExpenses({ expenses, onDelete, isEditMode }: RecentExpense
                     <TableCell className="text-right">
                       ${expense.amount.toFixed(2)}
                     </TableCell>
-                    {isEditMode && (
-                      <TableCell className="text-right">
-                        <AlertDialog>
-                          <AlertDialogTrigger asChild>
-                            <Button variant="ghost" size="icon">
-                              <Trash2 className="h-4 w-4 text-destructive" />
-                            </Button>
-                          </AlertDialogTrigger>
-                          <AlertDialogContent>
-                            <AlertDialogHeader>
-                              <AlertDialogTitle>Are you sure?</AlertDialogTitle>
-                              <AlertDialogDescription>
-                                This action cannot be undone. This will
-                                permanently delete this expense from your draft. The change will be saved when you click "Save Changes".
-                              </AlertDialogDescription>
-                            </AlertDialogHeader>
-                            <AlertDialogFooter>
-                              <AlertDialogCancel>Cancel</AlertDialogCancel>
-                              <AlertDialogAction
-                                onClick={() => onDelete(expense.id)}
-                              >
-                                Delete
-                              </AlertDialogAction>
-                            </AlertDialogFooter>
-                          </AlertDialogContent>
-                        </AlertDialog>
-                      </TableCell>
-                    )}
+                    <TableCell className="text-right">
+                      <AlertDialog>
+                        <AlertDialogTrigger asChild>
+                          <Button variant="ghost" size="icon">
+                            <Trash2 className="h-4 w-4 text-destructive" />
+                          </Button>
+                        </AlertDialogTrigger>
+                        <AlertDialogContent>
+                          <AlertDialogHeader>
+                            <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+                            <AlertDialogDescription>
+                              This action cannot be undone. This will
+                              permanently delete this expense.
+                            </AlertDialogDescription>
+                          </AlertDialogHeader>
+                          <AlertDialogFooter>
+                            <AlertDialogCancel>Cancel</AlertDialogCancel>
+                            <AlertDialogAction
+                              onClick={() => onDelete(expense.id)}
+                            >
+                              Delete
+                            </AlertDialogAction>
+                          </AlertDialogFooter>
+                        </AlertDialogContent>
+                      </AlertDialog>
+                    </TableCell>
                   </TableRow>
                 );
               })
             ) : (
               <TableRow>
                 <TableCell
-                  colSpan={isEditMode ? 5 : 4}
+                  colSpan={5}
                   className="text-center text-muted-foreground"
                 >
                   No expenses logged yet.

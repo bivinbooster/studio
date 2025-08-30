@@ -38,19 +38,16 @@ interface FinancialGoalsProps {
   goals: FinancialGoal[];
   onContribute: (goalId: string, amount: number) => void;
   onDelete: (goalId: string) => void;
-  isEditMode: boolean;
 }
 
 function GoalItem({
   goal,
   onContribute,
   onDelete,
-  isEditMode,
 }: {
   goal: FinancialGoal;
   onContribute: (goalId: string, amount: number) => void;
   onDelete: (goalId: string) => void;
-  isEditMode: boolean;
 }) {
   const animatedCurrentAmount = useCountUp(goal.currentAmount);
   const progress = (animatedCurrentAmount / goal.targetAmount) * 100;
@@ -72,51 +69,49 @@ function GoalItem({
         </div>
         <Progress value={progress} />
       </div>
-      {isEditMode && (
-         <div className="flex items-center gap-2">
-          <Dialog open={isContributeOpen} onOpenChange={setContributeOpen}>
-            <DialogTrigger asChild>
-              <Button variant="outline" size="sm" disabled={isCompleted}>
-                {isCompleted ? 'Completed' : 'Contribute'}
-              </Button>
-            </DialogTrigger>
-            <DialogContent>
-              <DialogHeader>
-                <DialogTitle>Contribute to "{goal.name}"</DialogTitle>
-              </DialogHeader>
-              <ContributeToGoalForm
-                goal={goal}
-                onSuccess={(amount) => {
-                  onContribute(goal.id, amount);
-                  setContributeOpen(false);
-                }}
-              />
-            </DialogContent>
-          </Dialog>
-          <AlertDialog>
-            <AlertDialogTrigger asChild>
-              <Button variant="ghost" size="icon">
-                <Trash2 className="h-4 w-4 text-destructive" />
-              </Button>
-            </AlertDialogTrigger>
-            <AlertDialogContent>
-              <AlertDialogHeader>
-                <AlertDialogTitle>Are you sure?</AlertDialogTitle>
-                <AlertDialogDescription>
-                  This action cannot be undone. This will permanently delete this
-                  financial goal from your draft. The change will be saved when you click "Save Changes".
-                </AlertDialogDescription>
-              </AlertDialogHeader>
-              <AlertDialogFooter>
-                <AlertDialogCancel>Cancel</AlertDialogCancel>
-                <AlertDialogAction onClick={() => onDelete(goal.id)}>
-                  Delete
-                </AlertDialogAction>
-              </AlertDialogFooter>
-            </AlertDialogContent>
-          </AlertDialog>
-        </div>
-      )}
+      <div className="flex items-center gap-2">
+        <Dialog open={isContributeOpen} onOpenChange={setContributeOpen}>
+          <DialogTrigger asChild>
+            <Button variant="outline" size="sm" disabled={isCompleted}>
+              {isCompleted ? 'Completed' : 'Contribute'}
+            </Button>
+          </DialogTrigger>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Contribute to "{goal.name}"</DialogTitle>
+            </DialogHeader>
+            <ContributeToGoalForm
+              goal={goal}
+              onSuccess={(amount) => {
+                onContribute(goal.id, amount);
+                setContributeOpen(false);
+              }}
+            />
+          </DialogContent>
+        </Dialog>
+        <AlertDialog>
+          <AlertDialogTrigger asChild>
+            <Button variant="ghost" size="icon">
+              <Trash2 className="h-4 w-4 text-destructive" />
+            </Button>
+          </AlertDialogTrigger>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+              <AlertDialogDescription>
+                This action cannot be undone. This will permanently delete this
+                financial goal.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <AlertDialogAction onClick={() => onDelete(goal.id)}>
+                Delete
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
+      </div>
     </div>
   );
 }
@@ -125,7 +120,6 @@ export function FinancialGoals({
   goals,
   onContribute,
   onDelete,
-  isEditMode,
 }: FinancialGoalsProps) {
   return (
     <Card>
@@ -144,14 +138,13 @@ export function FinancialGoals({
                 goal={goal}
                 onContribute={onContribute}
                 onDelete={onDelete}
-                isEditMode={isEditMode}
               />
             ))}
           </div>
         ) : (
           <div className="text-center text-muted-foreground py-8">
             <p>You haven't set any financial goals yet.</p>
-            {isEditMode && <p className="text-sm">Click "Add Goal" to get started.</p>}
+            <p className="text-sm">Click "Add Goal" to get started.</p>
           </div>
         )}
       </CardContent>

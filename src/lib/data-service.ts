@@ -93,8 +93,6 @@ export async function addExpense(
 
 // Delete an expense
 export async function deleteExpense(expenseId: string): Promise<void> {
-  // Ignore temporary IDs from the client
-  if (expenseId.startsWith('temp-')) return;
   const expenseRef = doc(db, 'expenses', expenseId);
   await deleteDoc(expenseRef);
 }
@@ -203,8 +201,6 @@ export async function contributeToGoal(
   goalId: string,
   amount: number
 ): Promise<void> {
-  // Ignore temporary IDs from the client
-  if (goalId.startsWith('temp-')) return;
   const goalRef = doc(db, 'goals', goalId);
   await updateDoc(goalRef, {
     currentAmount: increment(amount),
@@ -213,8 +209,6 @@ export async function contributeToGoal(
 
 // Delete a financial goal
 export async function deleteGoal(goalId: string): Promise<void> {
-  // Ignore temporary IDs from the client
-  if (goalId.startsWith('temp-')) return;
   const goalRef = doc(db, 'goals', goalId);
   await deleteDoc(goalRef);
 }
