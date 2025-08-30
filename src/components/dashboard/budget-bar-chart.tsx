@@ -18,6 +18,7 @@ import {
   ChartLegendContent,
 } from '@/components/ui/chart';
 import { Bar, BarChart, XAxis, YAxis } from 'recharts';
+import { formatCurrency } from '@/lib/utils';
 
 interface BudgetBarChartProps {
   expenses: Expense[];
@@ -75,10 +76,10 @@ export function BudgetBarChart({ expenses, budgets }: BudgetBarChartProps) {
             />
             <YAxis
               tickFormatter={(value) =>
-                `$${Number(value) / 1000}${Number(value) > 0 ? 'k' : ''}`
+                formatCurrency(Number(value)).replace('.00', '')
               }
             />
-            <ChartTooltip content={<ChartTooltipContent />} />
+            <ChartTooltip content={<ChartTooltipContent formatter={(value, name) => <span>{`${chartConfig[name as keyof typeof chartConfig].label}: ${formatCurrency(Number(value))}`}</span>} />} />
             <ChartLegend content={<ChartLegendContent />} />
             <Bar dataKey="spent" fill="var(--color-spent)" radius={4} />
             <Bar dataKey="budget" fill="var(--color-budget)" radius={4} />
