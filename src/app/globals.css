@@ -83,44 +83,6 @@
   }
 }
 
-@property --angle {
-  syntax: '<angle>';
-  initial-value: 0deg;
-  inherits: false;
-}
-
-@keyframes border-spin {
-  to {
-    --angle: 360deg;
-  }
-}
-
-.animated-border-button {
-  --angle: 0deg;
-  --border-size: 2px;
-  --border-color: conic-gradient(
-    from var(--angle),
-    hsl(var(--primary) / 0.8),
-    hsl(var(--accent) / 0.8) 50%,
-    hsl(var(--primary) / 0.8)
-  );
-
-  position: relative;
-  border-radius: 0.75rem; /* a little larger than the button's */
-  animation: border-spin 3s linear infinite;
-  box-shadow: 0 0 15px hsl(var(--primary) / 0.5), 0 0 30px hsl(var(--accent) / 0.4);
-}
-
-.animated-border-button::before {
-  content: '';
-  position: absolute;
-  inset: -var(--border-size);
-  background: var(--border-color);
-  border-radius: inherit;
-  z-index: -1;
-  filter: blur(2px);
-}
-
 /* Stars */
 @keyframes fall {
   0% {
