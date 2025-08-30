@@ -15,7 +15,7 @@ const Card = React.forwardRef<
     )}
     {...props}
   >
-    <div className="absolute -inset-0.5 rounded-lg bg-gradient-to-r from-primary to-accent opacity-0 blur transition-all duration-300 group-hover:opacity-75" />
+    <div className="absolute -inset-1 rounded-lg bg-gradient-to-r from-primary to-accent opacity-0 blur-md transition-all duration-300 group-hover:opacity-100" />
     <div className="relative h-full w-full rounded-lg bg-card p-6">
       {props.children}
     </div>
