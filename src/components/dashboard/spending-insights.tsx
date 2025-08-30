@@ -23,6 +23,8 @@ export function SpendingInsights({ expenses, budgets }: SpendingInsightsProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
 
+  const hasData = expenses.length > 0;
+
   const handleGetInsights = async () => {
     setIsLoading(true);
     setError('');
@@ -58,7 +60,7 @@ export function SpendingInsights({ expenses, budgets }: SpendingInsightsProps) {
         <div className="space-y-4">
           <Button
             onClick={handleGetInsights}
-            disabled={isLoading}
+            disabled={isLoading || !hasData}
             className="w-full"
           >
             {isLoading ? (
@@ -68,6 +70,11 @@ export function SpendingInsights({ expenses, budgets }: SpendingInsightsProps) {
             )}
             Analyze My Spending
           </Button>
+          {!hasData && (
+            <p className="text-sm text-center text-muted-foreground">
+              Add some expenses to get started with AI insights.
+            </p>
+          )}
           {error && (
             <Alert variant="destructive">
               <AlertTitle>Error</AlertTitle>
