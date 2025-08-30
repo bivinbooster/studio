@@ -1,7 +1,7 @@
 'use client';
 
 import type { Expense, Budget, FinancialGoal } from '@/lib/types';
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -32,19 +32,74 @@ interface DashboardPageProps {
   initialGoals: FinancialGoal[];
 }
 
+// Helper functions to interact with localStorage
+const getFromStorage = <T,>(key: string, defaultValue: T): T => {
+  if (typeof window === 'undefined') return defaultValue;
+  try {
+    const item = window.localStorage.getItem(key);
+    // Need to handle date revival for expenses
+    if (item) {
+      if (key === 'expenses') {
+        const parsed = JSON.parse(item);
+        return parsed.map((e: any) => ({ ...e, date: new Date(e.date) })) as T;
+      }
+      return JSON.parse(item);
+    }
+    return defaultValue;
+  } catch (error) {
+    console.warn(`Error reading localStorage key "${key}":`, error);
+    return defaultValue;
+  }
+};
+
+const saveToStorage = <T,>(key: string, value: T) => {
+  if (typeof window === 'undefined') return;
+  try {
+    window.localStorage.setItem(key, JSON.stringify(value));
+  } catch (error) {
+    console.warn(`Error setting localStorage key "${key}":`, error);
+  }
+};
+
+
 export function DashboardPage({
   initialExpenses,
   initialBudgets,
   initialGoals,
 }: DashboardPageProps) {
-  const [expenses, setExpenses] = useState<Expense[]>(initialExpenses);
-  const [budgets, setBudgets] = useState<Budget[]>(initialBudgets);
-  const [goals, setGoals] = useState<FinancialGoal[]>(initialGoals);
+  const [expenses, setExpenses] = useState<Expense[]>([]);
+  const [budgets, setBudgets] = useState<Budget[]>([]);
+  const [goals, setGoals] = useState<FinancialGoal[]>([]);
+  
+  const [isClient, setIsClient] = useState(false);
+
   const [isAddExpenseOpen, setAddExpenseOpen] = useState(false);
   const [isBudgetEditorOpen, setBudgetEditorOpen] = useState(false);
   const [isAddGoalOpen, setAddGoalOpen] = useState(false);
   const { toast } = useToast();
   const router = useRouter();
+  
+  // Effect to load data from localStorage on component mount
+  useEffect(() => {
+    setExpenses(getFromStorage('expenses', initialExpenses));
+    setBudgets(getFromStorage('budgets', initialBudgets));
+    setGoals(getFromStorage('goals', initialGoals));
+    setIsClient(true);
+  }, [initialExpenses, initialBudgets, initialGoals]);
+  
+  // Effects to save data to localStorage whenever it changes
+  useEffect(() => {
+    if (isClient) saveToStorage('expenses', expenses);
+  }, [expenses, isClient]);
+
+  useEffect(() => {
+    if (isClient) saveToStorage('budgets', budgets);
+  }, [budgets, isClient]);
+
+  useEffect(() => {
+    if (isClient) saveToStorage('goals', goals);
+  }, [goals, isClient]);
+
 
   const { totalSpent, totalBudget, remainingBudget } = useMemo(() => {
     const spent = expenses.reduce((sum, e) => sum + e.amount, 0);
@@ -108,6 +163,11 @@ export function DashboardPage({
     // In a real app, you'd clear session/token here
     router.push('/login');
   };
+  
+  if (!isClient) {
+    // You can return a loading spinner or a skeleton UI here
+    return null;
+  }
 
   return (
     <div className="flex min-h-screen w-full flex-col bg-transparent">
