@@ -10,11 +10,20 @@ const Card = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      'group relative rounded-lg border border-white/10 bg-card/75 text-card-foreground shadow-lg backdrop-blur-lg transition-all duration-300',
+      'group relative rounded-lg border border-white/10 bg-card text-card-foreground shadow-lg transition-all duration-300',
       className
     )}
     {...props}
-  />
+  >
+    <div
+      className={cn(
+        'absolute -inset-1 rounded-lg bg-gradient-to-r from-primary to-accent opacity-0 blur-md transition-all duration-300 group-hover:opacity-100'
+      )}
+    />
+    <div className="relative h-full w-full rounded-lg bg-card">
+      {props.children}
+    </div>
+  </div>
 ));
 Card.displayName = 'Card';
 
