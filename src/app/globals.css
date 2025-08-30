@@ -84,6 +84,47 @@
 }
 
 @layer utilities {
+  @property --angle {
+    syntax: '<angle>';
+    inherits: false;
+    initial-value: 0deg;
+  }
+
+  @keyframes border-spin {
+    to {
+      --angle: 360deg;
+    }
+  }
+
+  .animated-border-button {
+    --border-size: 2px;
+    --angle: 0deg;
+
+    position: relative;
+    border-radius: var(--radius);
+    
+    /* The gradient border */
+    background-image: conic-gradient(
+      from var(--angle),
+      hsl(var(--background)),
+      hsl(var(--accent)),
+      hsl(var(--primary)),
+      hsl(var(--accent)),
+      hsl(var(--background))
+    );
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    
+    animation: border-spin 3s linear infinite;
+  }
+
+  .animated-border-button > * {
+    /* This makes the button appear "inside" the border */
+    margin: var(--border-size);
+    border-radius: calc(var(--radius) - var(--border-size));
+  }
+
   @keyframes twinkle {
     0%, 100% { opacity: 0.5; transform: scale(1); }
     50% { opacity: 1; transform: scale(1.1); }

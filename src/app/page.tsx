@@ -48,9 +48,8 @@ export default function Home() {
                   repeatType: 'loop',
                   ease: 'easeInOut',
                 }}
-                className="group relative"
+                className="animated-border-button"
               >
-                <div className="absolute -inset-0.5 rounded-lg bg-gradient-to-r from-primary via-accent to-purple-600 opacity-75 blur transition duration-1000 group-hover:opacity-100 group-hover:duration-200"></div>
                 <Button
                   size="lg"
                   asChild
