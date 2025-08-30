@@ -1,3 +1,4 @@
+
 import { db } from './firebase';
 import {
   collection,
@@ -10,8 +11,10 @@ import {
   writeBatch,
   Timestamp,
   increment,
+  limit,
 } from 'firebase/firestore';
-import type { Expense, Budget, FinancialGoal, CategoryID } from './types';
+import type { Expense, Budget, FinancialGoal } from './types';
+import { SAMPLE_BUDGETS, SAMPLE_EXPENSES, SAMPLE_GOALS } from './constants';
 
 // Hardcoded user ID for demonstration purposes.
 // In a real app, this would come from an authentication service.
@@ -61,6 +64,56 @@ const goalConverter = {
     } as FinancialGoal;
   },
 };
+
+// --- Data Seeding ---
+export async function seedDatabaseWithSampleData() {
+  try {
+    // Check if data already exists for this user to prevent re-seeding
+    const expensesQuery = query(
+      collection(db, 'expenses'),
+      where('userId', '==', userId),
+      limit(1)
+    );
+    const existingExpenses = await getDocs(expensesQuery);
+
+    if (!existingExpenses.empty) {
+      console.log('Database already seeded. Skipping.');
+      return;
+    }
+
+    console.log('Database is empty. Seeding with sample data...');
+    const batch = writeBatch(db);
+
+    // Seed Expenses
+    const expensesCollection = collection(db, 'expenses').withConverter(expenseConverter);
+    SAMPLE_EXPENSES.forEach((expense) => {
+      const { id, ...expenseData } = expense; // Firestore generates its own ID
+      const docRef = doc(expensesCollection);
+      batch.set(docRef, expenseData);
+    });
+
+    // Seed Budgets
+    const budgetsCollection = collection(db, 'budgets').withConverter(budgetConverter);
+    SAMPLE_BUDGETS.forEach((budget) => {
+      const docRef = doc(budgetsCollection);
+      batch.set(docRef, budget);
+    });
+
+    // Seed Goals
+    const goalsCollection = collection(db, 'goals').withConverter(goalConverter);
+    SAMPLE_GOALS.forEach((goal) => {
+       const { id, ...goalData } = goal;
+       const docRef = doc(goalsCollection);
+       batch.set(docRef, goalData as any);
+    });
+
+    await batch.commit();
+    console.log('Successfully seeded database with sample data.');
+  } catch (error) {
+    console.error('Error seeding database:', error);
+  }
+}
+
 
 // --- Data Service Functions ---
 

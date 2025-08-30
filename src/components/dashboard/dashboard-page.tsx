@@ -1,3 +1,4 @@
+
 'use client';
 
 import type { Expense, Budget, FinancialGoal } from '@/lib/types';
@@ -46,6 +47,10 @@ export function DashboardPage() {
     const fetchData = async () => {
       setIsLoading(true);
       try {
+        // On first load for a new user, seed the database with sample data
+        // This function checks if data already exists, so it's safe to call.
+        await dataService.seedDatabaseWithSampleData();
+
         const [userExpenses, userBudgets, userGoals] = await Promise.all([
           dataService.getExpenses(),
           dataService.getBudgets(),
