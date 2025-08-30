@@ -6,18 +6,18 @@ import { cn } from '@/lib/utils';
 const Card = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => (
+>(({ className, children, ...props }, ref) => (
   <div
     ref={ref}
     className={cn(
-      'relative overflow-hidden rounded-lg border bg-card text-card-foreground shadow-sm',
-      'group',
+      'relative overflow-hidden rounded-lg border bg-card text-card-foreground shadow-sm group',
       className
     )}
+    {...props}
   >
-    <div className="absolute -inset-1.5 z-0 animate-spin rounded-lg bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)] opacity-0 blur-xl transition-all duration-500 group-hover:opacity-100 group-hover:duration-200" />
-    <div className="relative z-10 h-full w-full rounded-lg bg-card p-0">
-      {props.children}
+    <div className="absolute -inset-1 z-0 animate-spin rounded-lg bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)] opacity-0 blur-xl transition-all duration-500 group-hover:opacity-100 group-hover:duration-200" />
+    <div className="relative z-10 h-full w-full rounded-lg bg-card">
+      {children}
     </div>
   </div>
 ));
