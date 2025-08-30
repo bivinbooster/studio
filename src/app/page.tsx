@@ -48,7 +48,6 @@ export default function Home() {
                   repeatType: 'loop',
                   ease: 'easeInOut',
                 }}
-                className="animated-border-button"
               >
                 <Button
                   size="lg"
