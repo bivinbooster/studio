@@ -3,7 +3,7 @@
 import type { FinancialGoal } from '@/lib/types';
 import {
   Card,
-  BareCardContent,
+  CardContent,
   CardHeader,
   CardTitle,
   CardDescription,
@@ -129,7 +129,7 @@ export function FinancialGoals({
           Track your progress towards your savings goals.
         </CardDescription>
       </CardHeader>
-      <BareCardContent>
+      <CardContent>
         {goals.length > 0 ? (
           <div className="space-y-6">
             {goals.map((goal) => (
@@ -147,7 +147,7 @@ export function FinancialGoals({
             <p className="text-sm">Click "Add Goal" to get started.</p>
           </div>
         )}
-      </BareCardContent>
+      </CardContent>
     </Card>
   );
 }

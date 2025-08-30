@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import {
   Card,
-  BareCardContent,
+  CardContent,
   CardHeader,
   CardTitle,
   CardDescription,
@@ -56,7 +56,7 @@ export function SpendingInsights({ expenses, budgets }: SpendingInsightsProps) {
           Get personalized recommendations to improve your spending habits.
         </CardDescription>
       </CardHeader>
-      <BareCardContent>
+      <CardContent>
         <div className="space-y-4">
           <Button
             onClick={handleGetInsights}
@@ -87,7 +87,7 @@ export function SpendingInsights({ expenses, budgets }: SpendingInsightsProps) {
             </div>
           )}
         </div>
-      </BareCardContent>
+      </CardContent>
     </Card>
   );
 }

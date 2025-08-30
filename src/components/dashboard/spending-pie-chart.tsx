@@ -4,7 +4,7 @@ import type { Expense } from '@/lib/types';
 import { CATEGORIES } from '@/lib/constants';
 import {
   Card,
-  BareCardContent,
+  CardContent,
   CardHeader,
   CardTitle,
   CardDescription,
@@ -48,7 +48,7 @@ export function SpendingPieChart({ expenses }: SpendingPieChartProps) {
           A look at where your money is going this month.
         </CardDescription>
       </CardHeader>
-      <BareCardContent className="flex justify-center">
+      <CardContent className="flex justify-center">
         {chartData.length > 0 ? (
           <ChartContainer config={chartConfig} className="min-h-[250px] w-full max-w-[300px]">
             <PieChart
@@ -83,7 +83,7 @@ export function SpendingPieChart({ expenses }: SpendingPieChartProps) {
             No spending data to display.
           </div>
         )}
-      </BareCardContent>
+      </CardContent>
     </Card>
   );
 }
