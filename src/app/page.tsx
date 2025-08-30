@@ -51,19 +51,15 @@ export default function Home() {
                 className="group relative"
               >
                 <div className="absolute -inset-0.5 rounded-lg bg-gradient-to-r from-primary via-accent to-purple-600 opacity-75 blur transition duration-1000 group-hover:opacity-100 group-hover:duration-200"></div>
-                 <div
-                  className="relative rounded-lg p-0.5 before:absolute before:inset-0 before:-z-10 before:rounded-lg before:content-[''] animated-button-glow"
+                <Button
+                  size="lg"
+                  asChild
+                  className="relative"
                 >
-                  <Button
-                    size="lg"
-                    asChild
-                    className="relative w-full"
-                  >
-                    <Link href="/register">
-                      Get Started for Free <ArrowRight className="ml-2" />
-                    </Link>
-                  </Button>
-                </div>
+                  <Link href="/register">
+                    Get Started for Free <ArrowRight className="ml-2" />
+                  </Link>
+                </Button>
               </motion.div>
             </div>
           </div>
