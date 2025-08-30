@@ -6,7 +6,7 @@ import { cn } from '@/lib/utils';
 const Card = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
->(({ className, children, ...props }, ref) => (
+>(({ className, ...props }, ref) => (
   <div
     ref={ref}
     className={cn(
@@ -14,9 +14,7 @@ const Card = React.forwardRef<
       className
     )}
     {...props}
-  >
-    <div className="h-full w-full rounded-lg bg-card p-0">{children}</div>
-  </div>
+  />
 ));
 Card.displayName = 'Card';
 
