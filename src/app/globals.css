@@ -67,3 +67,45 @@
     @apply bg-background text-foreground;
   }
 }
+
+@layer components {
+  .card-container {
+    @apply relative;
+  }
+
+  .card-container::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: calc(var(--radius) + 2px);
+    background-image: conic-gradient(
+      from var(--angle, 0deg),
+      hsl(var(--primary)),
+      hsl(var(--accent)),
+      hsl(var(--primary) / 0.8),
+      hsl(var(--accent)),
+      hsl(var(--primary))
+    );
+    filter: blur(10px);
+    opacity: 0;
+    z-index: -1;
+    transition: opacity 0.3s ease-in-out;
+    animation: spin 5s linear infinite;
+  }
+
+  .card-container:hover::before {
+    opacity: 1;
+  }
+  
+  @property --angle {
+    syntax: '<angle>';
+    initial-value: 0deg;
+    inherits: false;
+  }
+
+  @keyframes spin {
+    to {
+      --angle: 360deg;
+    }
+  }
+}
