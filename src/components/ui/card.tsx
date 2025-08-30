@@ -10,14 +10,16 @@ const Card = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      'relative overflow-hidden rounded-lg border bg-card text-card-foreground shadow-sm group',
+      'relative rounded-lg border bg-card text-card-foreground shadow-sm',
       className
     )}
     {...props}
   >
-    <div className="absolute -inset-1 z-0 animate-spin rounded-lg bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)] opacity-0 blur-xl transition-all duration-500 group-hover:opacity-100 group-hover:duration-200" />
-    <div className="relative z-10 h-full w-full rounded-lg bg-card">
-      {children}
+    <div className="relative group overflow-hidden rounded-lg h-full w-full">
+      <div className="absolute -inset-0.5 rounded-lg bg-gradient-to-r from-primary via-accent to-purple-600 opacity-0 blur transition duration-1000 group-hover:opacity-100 group-hover:duration-200 animate-tilt"></div>
+      <div className="relative z-10 h-full w-full rounded-lg bg-card">
+        {children}
+      </div>
     </div>
   </div>
 ));
