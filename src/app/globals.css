@@ -23,7 +23,7 @@
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
     --ring: 263.4 70% 50.4%;
-    --radius: 0.5rem;
+    --radius: 0.75rem;
     --chart-1: 263.4 70% 50.4%;
     --chart-2: 173.4 70% 40.4%;
     --chart-3: 329 45% 56%;
@@ -65,5 +65,16 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@layer utilities {
+  @keyframes border-glow {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
   }
 }
