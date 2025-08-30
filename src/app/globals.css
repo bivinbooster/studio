@@ -139,30 +139,4 @@
     animation-duration: 30s;
      transform-origin: 50% 50%;
   }
-
-  /* Milky Way */
-  @keyframes rotate {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
-
-  #milky-way {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 200vw;
-    height: 200vw;
-    margin-top: -100vw;
-    margin-left: -100vw;
-    background:
-      radial-gradient(ellipse at center, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 40%),
-      radial-gradient(ellipse at center, rgba(200, 200, 255, 0.15) 0%, rgba(255, 255, 255, 0) 50%),
-      radial-gradient(ellipse at center, rgba(150, 150, 255, 0.1) 0%, rgba(255, 255, 255, 0) 60%);
-    border-radius: 50%;
-    animation: rotate 300s linear infinite;
-    opacity: 0.5;
-    transform-origin: center center;
-    z-index: -10;
-    filter: blur(10px);
-  }
 }

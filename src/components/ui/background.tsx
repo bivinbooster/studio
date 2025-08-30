@@ -30,7 +30,6 @@ export function Background() {
   return (
     <div className="fixed inset-0 -z-10 h-full w-full">
       <div className="absolute inset-0 -z-20 h-full w-full bg-background" />
-      <div id="milky-way"></div>
       <div id="stars">{stars}</div>
       <div id="stars2"></div>
       <div id="stars3"></div>
