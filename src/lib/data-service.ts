@@ -12,6 +12,7 @@ import {
   Timestamp,
   increment,
   limit,
+  deleteDoc,
 } from 'firebase/firestore';
 import type { Expense, Budget, FinancialGoal } from './types';
 
@@ -89,6 +90,13 @@ export async function addExpense(
   );
   return { ...newExpense, id: docRef.id };
 }
+
+// Delete an expense
+export async function deleteExpense(expenseId: string): Promise<void> {
+  const expenseRef = doc(db, 'expenses', expenseId);
+  await deleteDoc(expenseRef);
+}
+
 
 // Fetch all budgets for the user
 export async function getBudgets(): Promise<Budget[]> {

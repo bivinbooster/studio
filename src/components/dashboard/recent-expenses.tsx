@@ -18,21 +18,33 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Trash2 } from 'lucide-react';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/components/ui/alert-dialog';
 
 interface RecentExpensesProps {
   expenses: Expense[];
+  onDelete: (id: string) => void;
 }
 
-export function RecentExpenses({ expenses }: RecentExpensesProps) {
+export function RecentExpenses({ expenses, onDelete }: RecentExpensesProps) {
   const recentExpenses = expenses.slice(0, 5);
 
   return (
     <Card>
       <CardHeader>
         <CardTitle>Recent Transactions</CardTitle>
-        <CardDescription>
-          Your five most recent expenses.
-        </CardDescription>
+        <CardDescription>Your five most recent expenses.</CardDescription>
       </CardHeader>
       <CardContent>
         <Table>
@@ -42,6 +54,7 @@ export function RecentExpenses({ expenses }: RecentExpensesProps) {
               <TableHead className="hidden sm:table-cell">Category</TableHead>
               <TableHead className="hidden sm:table-cell">Date</TableHead>
               <TableHead className="text-right">Amount</TableHead>
+              <TableHead className="text-right">Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -62,13 +75,39 @@ export function RecentExpenses({ expenses }: RecentExpensesProps) {
                     <TableCell className="text-right">
                       ${expense.amount.toFixed(2)}
                     </TableCell>
+                    <TableCell className="text-right">
+                      <AlertDialog>
+                        <AlertDialogTrigger asChild>
+                          <Button variant="ghost" size="icon">
+                            <Trash2 className="h-4 w-4 text-destructive" />
+                          </Button>
+                        </AlertDialogTrigger>
+                        <AlertDialogContent>
+                          <AlertDialogHeader>
+                            <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+                            <AlertDialogDescription>
+                              This action cannot be undone. This will
+                              permanently delete this expense.
+                            </AlertDialogDescription>
+                          </AlertDialogHeader>
+                          <AlertDialogFooter>
+                            <AlertDialogCancel>Cancel</AlertDialogCancel>
+                            <AlertDialogAction
+                              onClick={() => onDelete(expense.id)}
+                            >
+                              Delete
+                            </AlertDialogAction>
+                          </AlertDialogFooter>
+                        </AlertDialogContent>
+                      </AlertDialog>
+                    </TableCell>
                   </TableRow>
                 );
               })
             ) : (
               <TableRow>
                 <TableCell
-                  colSpan={4}
+                  colSpan={5}
                   className="text-center text-muted-foreground"
                 >
                   No expenses logged yet.
