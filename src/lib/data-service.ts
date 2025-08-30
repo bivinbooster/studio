@@ -17,7 +17,7 @@ import type { Expense, Budget, FinancialGoal } from './types';
 
 // Hardcoded user ID for demonstration purposes.
 // In a real app, this would come from an authentication service.
-const userId = 'demo-user';
+const userId = 'new-user-test';
 
 // --- Type Converters for Firestore ---
 // These helpers ensure that data is correctly typed when moving between
